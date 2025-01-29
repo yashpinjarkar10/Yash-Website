@@ -4,7 +4,7 @@ This is the source code for my personal portfolio website, which is hosted on Gi
 
 ## Live Demo
 
-You can view the live version of my portfolio here: [Your GitHub Pages Link](https://yourusername.github.io/)
+You can view the live version of my portfolio here: [Your GitHub Pages Link]( https://yashpinjarkar10.github.io/Yash-Website/)
 
 ## Features
 - Responsive design for mobile and desktop
@@ -20,11 +20,12 @@ You can view the live version of my portfolio here: [Your GitHub Pages Link](htt
 ## Installation & Usage
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/your-repo.git
+   git clone https://github.com/yashpinjarkar10/Yash-Website.git
+   
    ```
 2. Navigate to the project folder:
    ```sh
-   cd your-repo
+   cd Yash-Website
    ```
 3. Open `index.html` in your browser.
 
