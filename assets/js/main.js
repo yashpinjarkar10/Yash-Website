@@ -136,11 +136,12 @@
     new Typed('.typed', {
       strings: typed_strings,
       loop: true,
-      typeSpeed: 100,
-      backSpeed: 50,
-      backDelay: 2000
+      typeSpeed: 40,  // Faster typing (default was 100)
+      backSpeed: 30,  // Faster deleting (default was 50)
+      backDelay: 800  // Less delay before switching text (default was 2000)
     });
   }
+  
 
   /**
    * Skills animation
