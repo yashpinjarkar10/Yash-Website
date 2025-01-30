@@ -261,3 +261,19 @@
   new PureCounter();
 
 })()
+
+document.addEventListener("DOMContentLoaded", function () {
+  async function fetchGitHubRepos() {
+      const githubUsername = "yashpinjarkar10";  // Replace with your GitHub username
+      try {
+          const response = await fetch(`https://api.github.com/users/${githubUsername}/repos`);
+          const repos = await response.json();
+          document.getElementById("github-repos").textContent = repos.length;
+      } catch (error) {
+          document.getElementById("github-repos").textContent = "Error fetching data";
+          console.error("GitHub API error:", error);
+      }
+  }
+
+  fetchGitHubRepos();
+});

@@ -1088,7 +1088,7 @@ section {
   bottom: 0;
   width: 300px;
   z-index: 9999;
-  background: #040b14;
+  background: rgb(4, 11, 20);
 }
 
 #footer .copyright {
@@ -1109,3 +1109,76 @@ section {
     padding-right: 20px 15px;
   }
 }
+/* Smooth Scroll Behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Dark Mode Styles */
+.dark-mode {
+  background-color: #121212;
+  color: #ffffff;
+}
+.dark-mode #header {
+  background-image: linear-gradient(#121212, rgba(18, 18, 18, 0.65));
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  #hero h1 {
+    font-size: 36px;
+    line-height: 42px;
+  }
+  #hero p {
+    font-size: 18px;
+  }
+  .section-title h2 {
+    font-size: 24px;
+  }
+}
+
+/* Hover Effects */
+.nav-menu a:hover, .nav-menu .active, .nav-menu .active:focus, .nav-menu li:hover>a {
+  color: #149ddd;
+  transform: translateX(5px);
+  transition: transform 0.3s ease;
+}
+
+
+/* Coding Stats Section - Blue Theme */
+.github-stats {
+  background: #112240; /* Dark navy blue */
+  padding: 60px 0;
+  text-align: left;
+}
+
+.github-stats .section-title h2 {
+  color: #40ade0 /* Cyan heading */
+}
+
+.github-stats h4 {
+  color:#c2e5f6;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.github-stats p {
+  font-size: 22px;
+  font-weight: bold;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.1);
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  box-shadow: inset 0px 0px 5px rgba(100, 255, 218, 0.5);
+  transition: transform 0.2s ease-in-out;
+  min-width: 100px;
+}
+
+.github-stats p:hover {
+  transform: scale(1.05);
+}
+
+
+
