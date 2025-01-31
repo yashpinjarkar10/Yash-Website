@@ -24,6 +24,7 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 
 
 
@@ -57,11 +58,9 @@
         <ul>
           <li><a href="#hero" class="nav-link scrollto active"><i class="bx bx-home"></i> <span>Home</span></a></li>
           <li><a href="#about" class="nav-link scrollto"><i class="bx bx-user"></i> <span>About</span></a></li>
-          <!-- <li><a href="#resume" class="nav-link scrollto"><i class="bx bx-file-blank"></i> <span>Resume</span></a></li> -->
           <li><a href="#github-stats" class="nav-link scrollto"><i class="bx bx-bar-chart"></i> <span>Stats</span></a></li>
-          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Portfolio</span></a></li>
-          <!-- <li><a href="#services" class="nav-link scrollto"><i class="bx bx-server"></i> <span>Services</span></a></li> -->
-          <!-- <li><a href="#contact" class="nav-link scrollto"><i class="bx bx-envelope"></i> <span>Contact</span></a></li> -->
+          <li><a href="#portfolio" class="nav-link scrollto"><i class="bx bx-book-content"></i> <span>Projects</span></a></li>
+          <li><a href="#certificates" class="nav-link scrollto"><i class="bx bx-award"></i> <span>Certificates</span></a></li>
           
         </ul>
       </nav><!-- .nav-menu -->
@@ -84,10 +83,20 @@
 
         <div class="section-title">
           <h2>About</h2>
-          <p> I am currently pursuing my BTech (2022-26) degree in Computer Science and Engineering at Guru Ghasidas Vishwavidyalaya, Bilaspur. My interests lie in Artificial Intelligence, Machine Learning, Deep Learning, and Generative AI. I have experience working with LangChain for building AI-powered applications and have developed projects in financial market analysis, intent-based chatbots, and medical image processing. Passionate about problem-solving, I have solved 100+ LeetCode problems, demonstrating strong algorithmic thinking.</p>
-        </div>
+          <div style="white-space: pre-line; font-family: Arial, sans-serif; line-height: 1.6;">
+            Computer Science Engineering student at Guru Ghasidas Vishwavidyalaya, passionate about developing AI/ML solutions with a special focus on Generative AI applications.  
+            My experience spans machine learning frameworks like TensorFlow, scikit-learn, and LangChain, with a strong emphasis on developing and implementing generative AI solutions for real-world problems.  
+            Currently exploring the frontiers of GenAI while building practical applications.  
+            Proficient in Python and C++, I combine strong algorithmic thinking with hands-on development experience. Actively seeking opportunities to innovate and collaborate on challenging projects in the GenAI and ML space.  
         
-        
+            <strong>Core competencies:</strong> 
+            - <strong>Generative AI Development (LangChain)</strong>  
+            - <strong>Machine Learning & Deep Learning (TensorFlow, scikit-learn)</strong>  
+            - <strong>Natural Language Processing (NLTK)</strong>  
+            - <strong>Computer Vision (OpenCV)</strong>  
+            - <strong>Python Development</strong>  
+        </div>        
+      </div>
 
         <!-- <div class="row">
           <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
@@ -119,14 +128,16 @@
     <!-- ======= Resume Section ======= -->
     <section id="resume" class="resume">
       <div class="container">
-
         <div class="section-title">
           <h2>Resume</h2>
-          <p>Check out my resume here </p>
-          <a href="https://drive.google.com/file/d/1gUkRHqgCXHZHWgHvoG2DIPs1dHpDpTj3/view?usp=drive_link"  target="_blank"><i class="bx bx-file-blank"></i> <span>Resume</span></a>
-        </div>  
+          <p>Check out my resume here:</p>
+          <a href="https://drive.google.com/file/d/1gUkRHqgCXHZHWgHvoG2DIPs1dHpDpTj3/view?usp=drive_link" target="_blank" title="Click to view full resume">
+            <img src="assets/img/resume.png" alt="Resume Preview" class="resume-thumbnail">
+          </a>
+        </div>
       </div>
-    </section><!-- End Resume Section -->
+    </section>
+    <!-- End Resume Section -->
 
     <!-- ======= GitHub & LeetCode Stats Section ======= -->
     <section id="github-stats" class="github-stats section-bg">
@@ -160,12 +171,9 @@
     <!-- ======= Portfolio Section ======= -->
     <section id="portfolio" class="portfolio section-bg">
       <div class="container">
-
         <div class="section-title">
-          <h2>Portfolio</h2>
-          <p>This portfolio is a showcase of my journey in the realm of Computer Science, highlighting my technical prowess, academic endeavors, and milestones in various technology</p>
+          <h2>Projects</h2>
         </div>
-
         <div class="row" data-aos="fade-up">
           <div class="col-lg-12 d-flex justify-content-center">
             <ul id="portfolio-flters">
@@ -173,93 +181,27 @@
             </ul>
           </div>
         </div>
+        <div class="row portfolio-container" id="portfolio-items" data-aos="fade-up" data-aos-delay="100">
+        </div>
+      </div>
+    </section>
 
-        <div class="row portfolio-container" data-aos="fade-up" data-aos-delay="100">
+    <!-- End Portfolio Section -->
 
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-1.png" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-1.png" data-gallery="portfolioGallery" class="portfolio-lightbox" title="GUI Calculator"><i class="bx bx-plus"></i></a>
-                <a href="https://github.com/yashpinjarkar10/Simple-GUI-Calculator" target="_blank" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
 
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-3.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-3.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 2"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div> -->
-
-          <!-- <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-4.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-4.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 2"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-5.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-5.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 2"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-6.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-6.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-7.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-7.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 1"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-card">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-8.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-8.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Card 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 portfolio-item filter-web">
-            <div class="portfolio-wrap">
-              <img src="assets/img/portfolio/portfolio-9.jpg" class="img-fluid" alt="">
-              <div class="portfolio-links">
-                <a href="assets/img/portfolio/portfolio-9.jpg" data-gallery="portfolioGallery" class="portfolio-lightbox" title="Web 3"><i class="bx bx-plus"></i></a>
-                <a href="portfolio-details.html" title="More Details"><i class="bx bx-link"></i></a>
-              </div>
-            </div>
-          </div> -->
-
+     <!-- ======= Certificates Section ======= -->
+    <section id="certificates" class="certificates section-bg">
+      <div class="container">
+        <div class="section-title">
+          <h2>Certificates</h2>
         </div>
 
+        <div class="row certificates-container" data-aos="fade-up" data-aos-delay="100">
+          <!-- Certificate items will be dynamically added here -->
+        </div>
       </div>
-    </section><!-- End Portfolio Section -->
+    </section>
+    <!-- End Certificates Section -->
 
     <!-- ======= Contact Section ======= -->
     <section id="contact" class="contact">

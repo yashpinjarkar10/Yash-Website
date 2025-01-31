@@ -277,3 +277,133 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fetchGitHubRepos();
 });
+document.addEventListener("DOMContentLoaded", function () {
+  const projects = [
+      {
+          title: "Financial Market Analysis Tool",
+          image: "assets/img/project/SMAA.png",
+          technologies: "Python, Streamlit, Gemini API",
+          github: "https://github.com/chirag-agrawal24/stock_market_analysis",
+          live: "https://finanancial-market-analysis.streamlit.app/"
+      },
+      {
+          title: "AI Chatbot",
+          image: "assets/img/portfolio/chatbot.png",
+          technologies: "Python, LangChain, OpenAI API",
+          github: "https://github.com/yashpinjarkar10/AI-Chatbot",
+          live: "#"
+      },
+      {
+          title: "Pneumonia Detection",
+          image: "assets/img/portfolio/weather-app.png",
+          technologies: "Python , Tensorflow, OpenCV ",
+          github: "https://github.com/yashpinjarkar10/MiniProject",
+          live: "https://weather-app-demo.com"
+      },
+      {
+          title: "E-commerce Website",
+          image: "assets/img/portfolio/ecommerce.png",
+          technologies: "React, Node.js, MongoDB",
+          github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
+          live: "https://myecommerce.com"
+      },
+      {
+        title: "E-commerce Website",
+        image: "assets/img/portfolio/ecommerce.png",
+        technologies: "React, Node.js, MongoDB",
+        github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
+        live: "https://myecommerce.com"
+      },
+      {
+      title: "E-commerce Website",
+      image: "assets/img/portfolio/ecommerce.png",
+      technologies: "React, Node.js, MongoDB",
+      github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
+      live: "https://myecommerce.com"
+      }
+  ];
+
+  const portfolioContainer = document.getElementById("portfolio-items");
+  
+  projects.forEach(project => {
+      const projectHTML = `
+          <div class="col-lg-4 col-md-6 portfolio-item">
+              <div class="portfolio-wrap">
+                  <img src="${project.image}" class="img-fluid" alt="">
+                  <div class="portfolio-info">
+                      <h4>${project.title}</h4>
+                      <p>${project.technologies}</p>
+                      <div class="portfolio-links">
+                          <a href="${project.github}" target="_blank" title="GitHub"><i class="bx bxl-github"></i></a>
+                          <a href="${project.live}" target="_blank" title="Live Demo"><i class="bx bx-link"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      `;
+      portfolioContainer.innerHTML += projectHTML;
+  });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const certificates = [
+    {
+      title: "Data Structure and Algorithm Certificate",
+      image: "assets/img/certificates/dsa.png",
+      description: "Certificate for completing the Data Structure and Algorithm course.",
+      link: "https://example.com/certificate/ml"
+    },
+    {
+      title: "Generative AI with Diffusion Models Certificate",
+      image: "assets/img/certificates/defusion.png",
+      description: "Certificate for completing Hands-On Generative AI with Diffusion Models: Building Real-World Applications course.",
+      link: "https://example.com/certificate/python"
+    },
+    {
+      title: "Certificate of merit",
+      image: "assets/img/certificates/naukri.png",
+      description: "Certificate of merit for Naukri Campus Young Turks",
+      link: "https://example.com/certificate/datascience"
+    },
+    {
+      title: "Certificate of merit",
+      image: "assets/img/certificates/naukri.png",
+      description: "Certificate of merit for Naukri Campus Young Turks",
+      link: "https://example.com/certificate/datascience"
+    },
+    {
+      title: "Certificate of merit",
+      image: "assets/img/certificates/naukri.png",
+      description: "Certificate of merit for Naukri Campus Young Turks",
+      link: "https://example.com/certificate/datascience"
+    },
+    // Add more certificates as needed
+  ];
+
+  const certificatesContainer = document.querySelector(".certificates-container");
+
+  certificates.forEach(certificate => {
+    const certificateHTML = `
+      <div class="col-lg-4 col-md-6 certificate-item">
+        <div class="certificate-wrap">
+          <img src="${certificate.image}" class="img-fluid" alt="${certificate.title}">
+          <div class="certificate-info">
+            <h4>${certificate.title}</h4>
+            <p>${certificate.description}</p>
+          </div>
+          <a href="${certificate.link}" target="_blank" class="certificate-button">View Certificate</a>
+        </div>
+      </div>
+    `;
+    certificatesContainer.innerHTML += certificateHTML;
+  });
+});
+
+
+// Initialize GLightbox
+const lightbox = GLightbox({
+  selector: '.glightbox', // Use the class for GLightbox
+  touchNavigation: true, // Enable touch navigation
+  loop: true, // Enable looping
+  autoplayVideos: true, // Autoplay videos (if any)
+});
