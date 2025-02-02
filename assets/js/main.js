@@ -287,40 +287,40 @@ document.addEventListener("DOMContentLoaded", function () {
           live: "https://finanancial-market-analysis.streamlit.app/"
       },
       {
+        title: "Video AI Summarizer Agent",
+        image: "assets/img/project/sum.png",
+        technologies: "Python, NLP, Streamlit , Phidata, Gemini API",
+        github: "https://github.com/yashpinjarkar10/VidAnalyze",
+        live: "https://weather-app-demo.com"
+      },
+      {
           title: "AI Chatbot",
           image: "assets/img/portfolio/chatbot.png",
           technologies: "Python, LangChain, OpenAI API",
           github: "https://github.com/yashpinjarkar10/AI-Chatbot",
           live: "#"
       },
-      {
-          title: "Pneumonia Detection",
-          image: "assets/img/portfolio/weather-app.png",
-          technologies: "Python , Tensorflow, OpenCV ",
-          github: "https://github.com/yashpinjarkar10/MiniProject",
-          live: "https://weather-app-demo.com"
-      },
-      {
-          title: "E-commerce Website",
-          image: "assets/img/portfolio/ecommerce.png",
-          technologies: "React, Node.js, MongoDB",
-          github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
-          live: "https://myecommerce.com"
-      },
-      {
-        title: "E-commerce Website",
-        image: "assets/img/portfolio/ecommerce.png",
-        technologies: "React, Node.js, MongoDB",
-        github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
-        live: "https://myecommerce.com"
-      },
-      {
-      title: "E-commerce Website",
-      image: "assets/img/portfolio/ecommerce.png",
-      technologies: "React, Node.js, MongoDB",
-      github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
-      live: "https://myecommerce.com"
-      }
+      // {
+      //     title: "E-commerce Website",
+      //     image: "assets/img/portfolio/ecommerce.png",
+      //     technologies: "React, Node.js, MongoDB",
+      //     github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
+      //     live: "https://myecommerce.com"
+      // },
+      // {
+      //   title: "E-commerce Website",
+      //   image: "assets/img/portfolio/ecommerce.png",
+      //   technologies: "React, Node.js, MongoDB",
+      //   github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
+      //   live: "https://myecommerce.com"
+      // },
+      // {
+      // title: "E-commerce Website",
+      // image: "assets/img/portfolio/ecommerce.png",
+      // technologies: "React, Node.js, MongoDB",
+      // github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
+      // live: "https://myecommerce.com"
+      // }
   ];
 
   const portfolioContainer = document.getElementById("portfolio-items");
@@ -351,31 +351,25 @@ document.addEventListener("DOMContentLoaded", function () {
       title: "Data Structure and Algorithm Certificate",
       image: "assets/img/certificates/dsa.png",
       description: "Certificate for completing the Data Structure and Algorithm course.",
-      link: "https://example.com/certificate/ml"
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/1736956677804-certificate.png"
     },
     {
       title: "Generative AI with Diffusion Models Certificate",
       image: "assets/img/certificates/defusion.png",
       description: "Certificate for completing Hands-On Generative AI with Diffusion Models: Building Real-World Applications course.",
-      link: "https://example.com/certificate/python"
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/CertificateOfCompletion_HandsOn%20Generative%20AI%20with%20Diffusion%20Models%20Building%20RealWorld%20Applications.pdf"
     },
     {
       title: "Certificate of merit",
       image: "assets/img/certificates/naukri.png",
       description: "Certificate of merit for Naukri Campus Young Turks",
-      link: "https://example.com/certificate/datascience"
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/young_turks_round_1_achievement.pdf"
     },
     {
-      title: "Certificate of merit",
-      image: "assets/img/certificates/naukri.png",
-      description: "Certificate of merit for Naukri Campus Young Turks",
-      link: "https://example.com/certificate/datascience"
-    },
-    {
-      title: "Certificate of merit",
-      image: "assets/img/certificates/naukri.png",
-      description: "Certificate of merit for Naukri Campus Young Turks",
-      link: "https://example.com/certificate/datascience"
+      title: "Certificate of Participation",
+      image: "assets/img/certificates/AIIIP.png",
+      description: "Certificate for participating in the AIIP Aptitude Test",
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/AIIIP.png"
     },
     // Add more certificates as needed
   ];
