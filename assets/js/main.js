@@ -349,7 +349,13 @@ document.addEventListener("DOMContentLoaded", function () {
   const certificates = [
     {
       title: "Data Structure and Algorithm Certificate",
-      image: "assets/img/certificates/dsa.png",
+      image: "assets/img/certificates/DSA.png",
+      description: "Certificate for completing the Data Structure and Algorithm course.",
+      link: "https://example.com/certificate/ml"
+    },
+    {
+      title: "Data Structure and Algorithm Certificate",
+      image: "assets/img/certificates/DSA.png",
       description: "Certificate for completing the Data Structure and Algorithm course.",
       link: "https://github.com/yashpinjarkar10/Certificates/blob/main/1736956677804-certificate.png"
     },
