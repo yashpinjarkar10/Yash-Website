@@ -401,3 +401,76 @@ const lightbox = GLightbox({
   loop: true, // Enable looping
   autoplayVideos: true, // Autoplay videos (if any)
 });
+
+
+
+
+
+async function sendMessage() {
+  const inputField = document.getElementById("user-input");
+  const message = inputField.value.trim();
+  if (message === "") return;
+
+  appendMessage("You", message);
+  inputField.value = "";
+
+  try {
+      const response = await fetch("https://yashpinjarkar10-webchat1.hf.space/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ input: message })
+      });
+
+      const data = await response.json();
+      appendMessage("Yash", data.answer);
+  } catch (error) {
+      appendMessage("Yash", "Error connecting to server.");
+  }
+}
+
+function appendMessage(sender, message) {
+  const chatBox = document.getElementById("chat-box");
+  const messageElement = document.createElement("div");
+  messageElement.classList.add("message", sender === "You" ? "user" : "bot");
+  messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  chatBox.appendChild(messageElement);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  const chatbotBtn = document.getElementById("chatbot-btn");
+  const chatbotPopup = document.getElementById("chatbot-popup");
+  const closeChatbot = document.getElementById("close-chatbot");
+  const chatbotOverlay = document.getElementById("chatbot-overlay");
+  const userInput = document.getElementById("user-input");
+  const sendButton = document.getElementById("send-button");
+
+  // Open chatbot
+  chatbotBtn.addEventListener("click", function () {
+    chatbotPopup.style.display = "flex";
+    chatbotOverlay.style.display = "block";
+    userInput.focus();
+  });
+
+  // Close chatbot
+  closeChatbot.addEventListener("click", function () {
+    chatbotPopup.style.display = "none";
+    chatbotOverlay.style.display = "none";
+  });
+
+  // Close chatbot when clicking outside
+  chatbotOverlay.addEventListener("click", function () {
+    chatbotPopup.style.display = "none";
+    chatbotOverlay.style.display = "none";
+  });
+
+  // Send message when Enter is pressed
+  userInput.addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      sendMessage();
+    }
+  });
+});

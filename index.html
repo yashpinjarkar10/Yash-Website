@@ -52,6 +52,11 @@
           <!-- <a href="#" class="google-plus"><i class="bx bxl-skype"></i></a> -->
           <a href="https://www.linkedin.com/in/yash-pinjarkar-b7a61b259" target="_blank" class="linkedin"><i class="bx bxl-linkedin"></i></a>
         </div>
+
+        <button id="chatbot-btn" class="chatbot-toggle">Chat with ME</button>
+
+
+        
       </div>
 
       <nav id="navbar" class="nav-menu navbar">
@@ -213,6 +218,45 @@
 
 
   </main><!-- End #main -->
+  <!-- Chatbot Popup -->
+  <!-- Chatbot Popup -->
+<div id="chatbot-popup" class="chatbot-container">
+  <div class="chatbot-header">
+    <h2>Yash Pinjarkar</h2>
+    <button id="close-chatbot">&times;</button>
+  </div>
+  <div id="chat-box" class="chatbot-messages">
+    <div class="message bot"><strong>Yash:</strong> Hey! I’m Yash’s virtual self. How can I help you today?</div>
+    <div class="message bot"><strong>Yash:</strong> Here are some things you can ask me:</div>
+    <ul class="sample-questions">
+      <li>📌 Tell me about your skills and projects.</li>
+      <li>📌 Show me your latest work.</li>
+      <li>📌 What technologies does you specialize in?</li>
+    </ul>
+  </div>
+
+  <div class="chatbot-input">
+    <input id="user-input" type="text" placeholder="Ask me anything..." />
+    <button id="send-button" onclick="sendMessage()">Send</button>
+  </div>
+</div>
+
+<!-- Background Blur Overlay -->
+<div id="chatbot-overlay"></div>
+
+<style>
+  .sample-questions {
+    padding-left: 20px;
+    margin: 10px 0;
+    list-style-type: none;
+  }
+  .sample-questions li {
+    font-size: 14px;
+    color: #555;
+  }
+</style>
+
+  <!-- End Chatbot Popup -->
 
   <!-- ======= Footer ======= -->
   <footer id="footer">
