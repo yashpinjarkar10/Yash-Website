@@ -4,7 +4,7 @@ This is the source code for my personal portfolio website, which is hosted on Gi
 
 ## Live Demo
 
-You can view the live version of my portfolio here: [Your GitHub Pages Link]( https://yashpinjarkar10.github.io/Yash-Website/)
+You can view the live version of my portfolio here: [GitHub Page Link]( https://yashpinjarkar10.github.io/Yash-Website/)
 
 ## Features
 - Responsive design for mobile and desktop
