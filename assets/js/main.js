@@ -296,9 +296,9 @@ document.addEventListener("DOMContentLoaded", function () {
       {
           title: "AI Chatbot",
           image: "assets/img/portfolio/chatbot.png",
-          technologies: "Python, LangChain, OpenAI API",
-          github: "https://github.com/yashpinjarkar10/AI-Chatbot",
-          live: "#"
+          technologies: "Python, LangChain, Gemini Model, ChromaDB, Hugging Face, FastAPI",
+          github: "https://github.com/yashpinjarkar10/Chat-Web",
+          live: "https://yashpinjarkar10-webchat1.hf.space/"
       },
       // {
       //     title: "E-commerce Website",
@@ -358,6 +358,18 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "assets/img/certificates/defusion.png",
       description: "Certificate for completing Hands-On Generative AI with Diffusion Models: Building Real-World Applications course.",
       link: "https://github.com/yashpinjarkar10/Certificates/blob/main/CertificateOfCompletion_HandsOn%20Generative%20AI%20with%20Diffusion%20Models%20Building%20RealWorld%20Applications.pdf"
+    },
+    {
+      title: "Applied AI: Hugging Face Transformers Certificate",
+      image: "assets/img/certificates/defusion.png",
+      description: "Certificate for completing Applied AI: Hugging Face Transformers Building Real-World Applications course.",
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/CertificateOfCompletion_Applied%20AI%20Getting%20Started%20with%20Hugging%20Face%20Transformers.pdf"
+    },
+    {
+      title: "AI Workshop: Advanced Chatbot Development Certificate",
+      image: "assets/img/certificates/defusion.png",
+      description: "Certificate for completing AI Workshop: Advanced Chatbot Development Building Real-World Applications course.",
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/CertificateOfCompletion_AI%20Workshop%20Advanced%20Chatbot%20Development.pdf"
     },
     {
       title: "Certificate of merit",
