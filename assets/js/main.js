@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
         image: "assets/img/project/sum.png",
         technologies: "Python, NLP, Streamlit , Phidata, Gemini API",
         github: "https://github.com/yashpinjarkar10/VidAnalyze",
-        live: "https://weather-app-demo.com"
+        live: "https://yashpinjarkar10-vidanalyze.hf.space"
       },
       {
           title: "PineScript Agentic RAG",
