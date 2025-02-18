@@ -294,19 +294,19 @@ document.addEventListener("DOMContentLoaded", function () {
         live: "https://weather-app-demo.com"
       },
       {
+          title: "PineScript Agentic RAG",
+          image: "assets/img/project/pine.png",
+          technologies: "Python,Pydantic AI, Supabase, Streamlit, Hugging Face Space",
+          github: "https://github.com/yashpinjarkar10/Pinescript-Agent",
+          live: "https://yashpinjarkar10-pinescript-agent.hf.space"
+      },
+      {
           title: "AI Chatbot",
           image: "assets/img/portfolio/chatbot.png",
           technologies: "Python, LangChain, Gemini Model, ChromaDB, Hugging Face, FastAPI",
           github: "https://github.com/yashpinjarkar10/Chat-Web",
           live: "https://yashpinjarkar10-webchat1.hf.space/"
-      },
-      // {
-      //     title: "E-commerce Website",
-      //     image: "assets/img/portfolio/ecommerce.png",
-      //     technologies: "React, Node.js, MongoDB",
-      //     github: "https://github.com/yashpinjarkar10/Ecommerce-Site",
-      //     live: "https://myecommerce.com"
-      // },
+      }
       // {
       //   title: "E-commerce Website",
       //   image: "assets/img/portfolio/ecommerce.png",
