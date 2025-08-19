@@ -348,6 +348,12 @@ document.addEventListener("DOMContentLoaded", function () {
 document.addEventListener("DOMContentLoaded", function () {
   const certificates = [
     {
+      title: "OCI Generative AI Professional Certificate",
+      image: "assets/img/certificates/OCI_GEN.png",
+      description: "Certificate for Oracle Cloud Infrastructure 2025 Generative AI Professional ",
+      link: "https://github.com/yashpinjarkar10/Certificates/blob/main/eCertificate.pdf"
+    },
+    {
       title: "Data Structure and Algorithm Certificate",
       image: "assets/img/certificates/DSA.png",
       description: "Certificate for completing the Data Structure and Algorithm course.",
