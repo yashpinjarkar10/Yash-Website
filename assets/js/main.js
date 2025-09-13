@@ -320,6 +320,13 @@ document.addEventListener("DOMContentLoaded", function () {
         technologies: "Python, MCP, Langchain, gTTS, NewsAPI, Streamlit, FastAPI",
         github: "https://github.com/yashpinjarkar10/AI-Journalist",
         live: "https://github.com/yashpinjarkar10/AI-Journalist"
+      },
+      {
+        title: "Student Performance Predictor",
+        image: "assets/img/project/ml.png",
+        technologies: "Python, Flask, scikit-learn, pandas, numpy, XGBoost, CatBoost, Docker, HTML/CSS, Jinja2",
+        github: "https://github.com/yashpinjarkar10/mlproject",
+        live: "https://yashpinjarkar10-ml-project.hf.space"
       }
 
   ];
