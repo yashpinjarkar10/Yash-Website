@@ -279,7 +279,14 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 document.addEventListener("DOMContentLoaded", function () {
   const projects = [
-          {
+      {
+      title: "Trading Agent",
+      image: "assets/img/project/Screenshot 2025-09-20 220049.png",
+      technologies: "LangGraph, Yfianance, Google News, Langsmith, FastAPI",
+      github: "https://github.com/yashpinjarkar10/Trading-Agent",
+      live: "https://yashpinjarkar10-trading-agent.hf.space/"
+      },
+      {
       title: "Cursor 2D Animation",
       image: "assets/img/project/manim.png",
       technologies: "LangGraph, Manim, Python, LangSmith, SupaBase",
