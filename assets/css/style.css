@@ -351,6 +351,79 @@ section {
 /*--------------------------------------------------------------
 # About
 --------------------------------------------------------------*/
+.about {
+  padding: 60px 0;
+}
+
+.about .section-title {
+  padding-bottom: 30px;
+}
+
+.about .section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #173b6c;
+}
+
+.about .section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #149ddd;
+  bottom: 0;
+  left: 0;
+}
+
+.about-content {
+  background: #fff;
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.about-content:hover {
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.12);
+  transform: translateY(-5px);
+}
+
+.about-content p {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #272829;
+  margin-bottom: 20px;
+}
+
+.about-content p.intro-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #173b6c;
+  border-left: 4px solid #149ddd;
+  padding-left: 20px;
+  margin-bottom: 25px;
+}
+
+.about-content p.collab-text {
+  font-size: 17px;
+  font-weight: 500;
+  color: #149ddd;
+  background: #f5f8fd;
+  padding: 20px;
+  border-radius: 8px;
+  border-left: 4px solid #149ddd;
+  margin-bottom: 0;
+}
+
+.about-content strong {
+  color: #173b6c;
+  font-weight: 600;
+}
+
 .about .content h3 {
   font-weight: 700;
   font-size: 26px;
@@ -381,6 +454,21 @@ section {
 
 .about .content p:last-child {
   margin-bottom: 0;
+}
+
+/* Responsive About Section */
+@media (max-width: 768px) {
+  .about-content {
+    padding: 25px;
+  }
+  
+  .about-content p.intro-text {
+    font-size: 16px;
+  }
+  
+  .about-content p {
+    font-size: 15px;
+  }
 }
 
 /*--------------------------------------------------------------
@@ -1293,24 +1381,200 @@ html {
 }
 
 /* Resume Section */
-/* Resume Section */
-/* Resume Section */
-.resume .text-center {
-  text-align: center; /* Center the content horizontally */
+.resume {
+  padding: 60px 0;
 }
 
-.resume .resume-thumbnail {
-  width: 200px; /* Adjust the size as needed */
+.resume .section-title {
+  padding-bottom: 30px;
+  text-align: center;
+}
+
+.resume .section-title h2 {
+  font-size: 32px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #173b6c;
+}
+
+.resume .section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #149ddd;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.resume .section-title p {
+  margin-bottom: 0;
+  color: #272829;
+}
+
+/* Resume Wrapper */
+.resume-wrapper {
+  max-width: 500px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.resume-wrapper:hover {
+  box-shadow: 0 0 30px 0 rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px);
+}
+
+/* PDF Preview Container */
+.pdf-preview-container {
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  background: #f5f8fd;
+}
+
+.resume-preview-img {
+  width: 100%;
   height: auto;
-  border: 2px solid #ddd;
-  border-radius: 8px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: inline-block; /* Ensure the image is centered properly */
+  display: block;
+  transition: transform 0.3s ease;
+  max-height: 600px;
+  object-fit: contain;
 }
 
-.resume .resume-thumbnail:hover {
-  transform: scale(1.05); /* Slightly enlarge on hover */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow on hover */
+.preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(20, 157, 221, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pdf-preview-container:hover .preview-overlay {
+  opacity: 1;
+}
+
+.pdf-preview-container:hover .resume-preview-img {
+  transform: scale(1.05);
+}
+
+.preview-overlay i {
+  font-size: 64px;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.preview-overlay p {
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+}
+
+/* Resume Actions */
+.resume-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  padding: 25px;
+  background: #fff;
+  border-top: 1px solid #e8eef5;
+}
+
+.resume-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-family: "Raleway", sans-serif;
+}
+
+.btn-download {
+  background: #149ddd;
+  color: #fff;
+  border: 2px solid #149ddd;
+}
+
+.btn-download:hover {
+  background: #37b3ed;
+  border-color: #37b3ed;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(20, 157, 221, 0.3);
+}
+
+.btn-view {
+  background: #fff;
+  color: #149ddd;
+  border: 2px solid #149ddd;
+}
+
+.btn-view:hover {
+  background: #149ddd;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(20, 157, 221, 0.3);
+}
+
+.resume-actions a i {
+  font-size: 16px;
+}
+
+/* Responsive Design for Resume Section */
+@media (max-width: 768px) {
+  .resume-wrapper {
+    margin: 0 15px;
+  }
+
+  .resume-actions {
+    flex-direction: column;
+    padding: 20px;
+    gap: 12px;
+  }
+
+  .resume-actions a {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .resume .section-title h2 {
+    font-size: 28px;
+  }
+  
+  .preview-overlay i {
+    font-size: 48px;
+  }
+  
+  .preview-overlay p {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .resume .section-title h2 {
+    font-size: 24px;
+  }
 }
 
 /* Chatbot Popup Button */
@@ -1498,5 +1762,194 @@ html {
 
   .chatbot-messages {
     max-height: 60vh; /* Adjust message box height for smaller screens */
+  }
+}
+
+/* Project Modal Styles */
+.project-modal {
+  display: none;
+  position: fixed;
+  z-index: 10000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px);
+  align-items: center;
+  justify-content: center;
+}
+
+.project-modal-content {
+  background: #fff;
+  margin: auto;
+  padding: 0;
+  width: 90%;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+  position: relative;
+  animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.project-modal-close {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  font-size: 36px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+  z-index: 10001;
+  transition: all 0.3s ease;
+  background: rgba(0, 0, 0, 0.5);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.project-modal-close:hover {
+  background: #149ddd;
+  transform: rotate(90deg);
+}
+
+.modal-project-header {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+}
+
+.modal-project-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.modal-project-body {
+  padding: 30px;
+}
+
+.modal-project-body h3 {
+  font-size: 28px;
+  font-weight: 700;
+  color: #173b6c;
+  margin-bottom: 15px;
+  font-family: "Raleway", sans-serif;
+}
+
+.modal-project-tech {
+  font-size: 15px;
+  color: #149ddd;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background: #f5f8fd;
+  border-radius: 5px;
+  border-left: 4px solid #149ddd;
+}
+
+.modal-project-description {
+  font-size: 16px;
+  line-height: 1.8;
+  color: #272829;
+  margin-bottom: 25px;
+}
+
+.modal-project-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.modal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 25px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: all 0.3s ease;
+  font-family: "Raleway", sans-serif;
+}
+
+.modal-btn i {
+  font-size: 18px;
+}
+
+.modal-btn-github {
+  background: #333;
+  color: #fff;
+  border: 2px solid #333;
+}
+
+.modal-btn-github:hover {
+  background: #000;
+  border-color: #000;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn-live {
+  background: #149ddd;
+  color: #fff;
+  border: 2px solid #149ddd;
+}
+
+.modal-btn-live:hover {
+  background: #37b3ed;
+  border-color: #37b3ed;
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(20, 157, 221, 0.3);
+}
+
+/* Modal Responsive */
+@media (max-width: 768px) {
+  .project-modal-content {
+    width: 95%;
+    margin: 20px auto;
+  }
+  
+  .modal-project-body {
+    padding: 20px;
+  }
+  
+  .modal-project-body h3 {
+    font-size: 24px;
+  }
+  
+  .modal-project-links {
+    flex-direction: column;
+  }
+  
+  .modal-btn {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  .project-modal-close {
+    right: 15px;
+    top: 15px;
+    width: 35px;
+    height: 35px;
+    font-size: 28px;
   }
 }

@@ -86,14 +86,26 @@
     <section id="about" class="about">
       <div class="container">
 
-        <div class="about-section">
+        <div class="section-title">
           <h2>About Me</h2>
-          <p>
-            I am a <strong>Computer Science Engineering student</strong> at Guru Ghasidas Vishwavidyalaya, passionate about developing <strong>AI/ML solutions</strong> with a special focus on <strong>Generative AI applications</strong>. My experience spans <strong>machine learning frameworks</strong> like TensorFlow, scikit-learn, and LangChain, with a strong emphasis on building and deploying <strong>Generative AI solutions</strong> for real-world problems. Currently, I am exploring the frontiers of <strong>GenAI</strong> while building practical, innovative applications.
-          </p>
-          <p>
-            Proficient in <strong>Python</strong> and <strong>C++</strong>, I combine strong <strong>algorithmic thinking</strong> with hands-on development experience. I am actively seeking opportunities to <strong>innovate</strong> and <strong>collaborate</strong> on challenging projects in the <strong>GenAI</strong> and <strong>ML space</strong>.
-          </p>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="about-content">
+              <p class="intro-text">
+                I'm a passionate <strong>AI & Machine Learning Engineer</strong> currently pursuing my B.Tech in Computer Science and Engineering (2022–2026) from <strong>Guru Ghasidas Vishwavidyalaya, Bilaspur (C.G)</strong>.
+              </p>
+              <p>
+                With over <strong>1.5 years of hands-on experience</strong> in building intelligent systems, I specialize in <strong>Generative AI</strong>, <strong>LLM-powered automation</strong>, and <strong>data-driven model pipelines</strong> that bridge the gap between research and real-world deployment.
+              </p>
+              <p>
+                I'm continuously exploring the intersection of <strong>Generative AI</strong>, <strong>Automation Agents</strong>, and <strong>Financial Systems</strong>, with a focus on scalable architectures and seamless AI integration.
+              </p>
+              <p class="collab-text">
+                Always open to collaborating on AI research, open-source projects, or innovative product engineering that pushes what's possible with LLMs. 🚀
+              </p>
+            </div>
+          </div>
         </div>
       </div>  
     </section>
@@ -104,10 +116,28 @@
       <div class="container">
         <div class="section-title">
           <h2>Resume</h2>
-          <p>Check out my resume here:</p>
-          <a href="https://drive.google.com/file/d/18-pi_Y6JUCQNVvDnqJ_oh6-IqYcQJ3ts/view?usp=sharing" target="_blank" title="Click to view full resume">
-            <img src="assets/img/resume.png" alt="Resume Preview" class="resume-thumbnail">
-          </a>
+          <p>View or download my resume</p>
+        </div>
+
+        <div class="resume-wrapper">
+          <!-- PDF Preview Thumbnail -->
+          <div class="pdf-preview-container" onclick="window.open('Resume (1).pdf', '_blank')">
+            <img src="assets/img/resume.png" alt="Resume Preview" class="resume-preview-img">
+            <div class="preview-overlay">
+              <i class="bi bi-file-earmark-pdf"></i>
+              <p>Click to view full resume</p>
+            </div>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="resume-actions">
+            <a href="Resume (1).pdf" target="_blank" class="btn-view">
+              <i class="bi bi-eye"></i> View Resume
+            </a>
+            <a href="Resume (1).pdf" download="Yash_Pinjarkar_Resume.pdf" class="btn-download">
+              <i class="bi bi-download"></i> Download
+            </a>
+          </div>
         </div>
       </div>
     </section>
@@ -135,7 +165,7 @@
                 LeetCode Problems Solved
               </a>
             </h4>
-            <p id="leetcode-solved">170+</p>
+            <p id="leetcode-solved">210+</p>
           </div>
         </div>
       </div>
@@ -198,15 +228,10 @@
               <div class="email">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>yashpinjarkar2003.com</p>
+                <p>yashpinjarkar2003@gmail.com</p>
               </div>
 
           </div>
-
-    
-
-
-
 
   </main><!-- End #main -->
   <!-- Chatbot Popup -->
@@ -236,6 +261,14 @@
 <!-- Background Blur Overlay -->
 <div id="chatbot-overlay"></div>
 
+<!-- Project Modal -->
+<div id="project-modal" class="project-modal">
+  <div class="project-modal-content">
+    <span class="project-modal-close" onclick="closeProjectModal()">&times;</span>
+    <div id="modal-project-content"></div>
+  </div>
+</div>
+
 <style>
   .sample-questions {
     padding-left: 20px;
@@ -254,7 +287,7 @@
   <footer id="footer">
     <div class="container">
       <div class="copyright">
-        &copy; Copyright <strong><span>YashPinjarkar 2024</span></strong>
+        &copy; Copyright <strong><span id="copyright-year">YashPinjarkar 2025</span></strong>
       </div>
     </div>
   </footer>

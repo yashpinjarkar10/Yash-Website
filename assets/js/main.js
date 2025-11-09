@@ -283,6 +283,7 @@ document.addEventListener("DOMContentLoaded", function () {
       title: "Trading Agent",
       image: "assets/img/project/Screenshot 2025-09-20 220049.png",
       technologies: "LangGraph, Yfianance, Google News, Langsmith, FastAPI",
+      description: "An intelligent trading agent that analyzes financial markets using real-time data from Yahoo Finance and Google News. Built with LangGraph for complex agent workflows, integrated with Langsmith for monitoring, and deployed via FastAPI for seamless API access.",
       github: "https://github.com/yashpinjarkar10/Trading-Agent",
       live: "https://yashpinjarkar10-trading-agent.hf.space/"
       },
@@ -290,6 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
       title: "Cursor 2D Animation",
       image: "assets/img/project/manim.png",
       technologies: "LangGraph, Manim, Python, LangSmith, SupaBase",
+      description: "An innovative tool that generates 2D mathematical animations using cursor movements. Leverages Manim for animation rendering, LangGraph for workflow orchestration, and SupaBase for data persistence. Perfect for creating educational mathematical visualizations.",
       github: "https://github.com/yashpinjarkar10/Cursor_2D_Animation",
       live: "https://yashpinjarkar10-manim-animation.hf.space/"
       },
@@ -297,6 +299,7 @@ document.addEventListener("DOMContentLoaded", function () {
           title: "Financial Market Analysis Tool",
           image: "assets/img/project/SMAA.png",
           technologies: "Python, Streamlit, Gemini API",
+          description: "A comprehensive stock market analysis platform powered by Google's Gemini AI. Provides real-time market insights, technical analysis, and AI-driven predictions through an intuitive Streamlit interface. Helps investors make informed trading decisions.",
           github: "https://github.com/chirag-agrawal24/stock_market_analysis",
           live: "https://finanancial-market-analysis.streamlit.app/"
       },
@@ -304,6 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title: "Video AI Summarizer Agent",
         image: "assets/img/project/sum.png",
         technologies: "Python, NLP, Streamlit , Phidata, Gemini API",
+        description: "An intelligent video summarization agent that extracts key insights from video content. Uses advanced NLP techniques with Gemini AI and Phidata framework to generate concise summaries, saving time for content consumers and researchers.",
         github: "https://github.com/yashpinjarkar10/VidAnalyze",
         live: "https://yashpinjarkar10-vidanalyze.hf.space"
       },
@@ -311,6 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
           title: "PineScript Agentic RAG",
           image: "assets/img/project/pine.png",
           technologies: "Python,Pydantic AI, Supabase, Streamlit, Hugging Face Space",
+          description: "A Retrieval-Augmented Generation (RAG) system specialized for PineScript trading strategies. Combines Pydantic AI for structured outputs with Supabase vector database to provide intelligent code suggestions and trading strategy recommendations.",
           github: "https://github.com/yashpinjarkar10/Pinescript-Agent",
           live: "https://yashpinjarkar10-pinescript-agent.hf.space"
       },
@@ -318,6 +323,7 @@ document.addEventListener("DOMContentLoaded", function () {
           title: "AI Chatbot",
           image: "assets/img/project/Gemini_Generated_Image_2rv24f2rv24f2rv2.png",
           technologies: "Python, LangChain, Gemini Model, ChromaDB, Hugging Face, FastAPI",
+          description: "A sophisticated conversational AI chatbot built with LangChain and Google's Gemini model. Features long-term memory using ChromaDB vector store, context-aware responses, and a robust FastAPI backend for reliable performance.",
           github: "https://github.com/yashpinjarkar10/Chat-Web",
           live: "https://yashpinjarkar10-webchat1.hf.space/"
       },
@@ -325,6 +331,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title: "AI Journalist",
         image: "assets/img/project/Gemini_Generated_Image_5jj88l5jj88l5jj8.png",
         technologies: "Python, MCP, Langchain, gTTS, NewsAPI, Streamlit, FastAPI",
+        description: "An automated journalism platform that aggregates news from multiple sources using NewsAPI, generates comprehensive articles with LangChain, and converts them to audio using Google Text-to-Speech. Built with MCP architecture for scalability.",
         github: "https://github.com/yashpinjarkar10/AI-Journalist",
         live: "https://github.com/yashpinjarkar10/AI-Journalist"
       },
@@ -332,6 +339,7 @@ document.addEventListener("DOMContentLoaded", function () {
         title: "Student Performance Predictor",
         image: "assets/img/project/ml.png",
         technologies: "Python, Flask, scikit-learn, pandas, numpy, XGBoost, CatBoost, Docker, HTML/CSS, Jinja2",
+        description: "A machine learning application that predicts student academic performance based on various factors. Implements ensemble methods using XGBoost and CatBoost for high accuracy. Deployed in Docker containers with a user-friendly Flask web interface.",
         github: "https://github.com/yashpinjarkar10/mlproject",
         live: "https://yashpinjarkar10-ml-project.hf.space"
       }
@@ -340,17 +348,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
   const portfolioContainer = document.getElementById("portfolio-items");
   
-  projects.forEach(project => {
+  projects.forEach((project, index) => {
       const projectHTML = `
           <div class="col-lg-4 col-md-6 portfolio-item">
-              <div class="portfolio-wrap">
+              <div class="portfolio-wrap" onclick="openProjectModal(${index})" style="cursor: pointer;">
                   <img src="${project.image}" class="img-fluid" alt="">
                   <div class="portfolio-info">
                       <h4>${project.title}</h4>
                       <p>${project.technologies}</p>
                       <div class="portfolio-links">
-                          <a href="${project.github}" target="_blank" title="GitHub"><i class="bx bxl-github"></i></a>
-                          <a href="${project.live}" target="_blank" title="Live Demo"><i class="bx bx-link"></i></a>
+                          <a href="${project.github}" target="_blank" title="GitHub" onclick="event.stopPropagation();"><i class="bx bxl-github"></i></a>
+                          <a href="${project.live}" target="_blank" title="Live Demo" onclick="event.stopPropagation();"><i class="bx bx-link"></i></a>
                       </div>
                   </div>
               </div>
@@ -358,6 +366,9 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
       portfolioContainer.innerHTML += projectHTML;
   });
+  
+  // Store projects globally for modal access
+  window.projectsData = projects;
 });
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -506,4 +517,54 @@ document.addEventListener("DOMContentLoaded", function () {
       sendMessage();
     }
   });
+
+  // Update copyright year dynamically
+  const copyrightYear = document.getElementById("copyright-year");
+  if (copyrightYear) {
+    const currentYear = new Date().getFullYear();
+    copyrightYear.textContent = `YashPinjarkar ${currentYear}`;
+  }
 });
+
+// Project Modal Functions
+function openProjectModal(projectIndex) {
+  const project = window.projectsData[projectIndex];
+  const modal = document.getElementById('project-modal');
+  const modalContent = document.getElementById('modal-project-content');
+  
+  modalContent.innerHTML = `
+    <div class="modal-project-header">
+      <img src="${project.image}" alt="${project.title}" class="modal-project-image">
+    </div>
+    <div class="modal-project-body">
+      <h3>${project.title}</h3>
+      <p class="modal-project-tech"><strong>Technologies:</strong> ${project.technologies}</p>
+      <p class="modal-project-description">${project.description}</p>
+      <div class="modal-project-links">
+        <a href="${project.github}" target="_blank" class="modal-btn modal-btn-github">
+          <i class="bx bxl-github"></i> View on GitHub
+        </a>
+        <a href="${project.live}" target="_blank" class="modal-btn modal-btn-live">
+          <i class="bx bx-link"></i> Live Demo
+        </a>
+      </div>
+    </div>
+  `;
+  
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProjectModal() {
+  const modal = document.getElementById('project-modal');
+  modal.style.display = 'none';
+  document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  const modal = document.getElementById('project-modal');
+  if (event.target === modal) {
+    closeProjectModal();
+  }
+}
