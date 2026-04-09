@@ -292,8 +292,8 @@ document.addEventListener("DOMContentLoaded", function () {
       image: "assets/img/project/manim.png",
       technologies: "LangGraph, Manim, Python, LangSmith, SupaBase",
       description: "An innovative tool that generates 2D mathematical animations using cursor movements. Leverages Manim for animation rendering, LangGraph for workflow orchestration, and SupaBase for data persistence. Perfect for creating educational mathematical visualizations.",
-      github: "https://github.com/yashpinjarkar10/Cursor_2D_Animation",
-      live: "https://yashpinjarkar10-manim-animation.hf.space/"
+      github: "https://github.com/yashpinjarkar10/cursor-2d-animation-frontend",
+      live: "https://cursor-2d-animation-frontend.yashpinjarkar2003.workers.dev/"
       },
       {
           title: "Financial Market Analysis Tool",
