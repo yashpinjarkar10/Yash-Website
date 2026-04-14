@@ -490,33 +490,134 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeChatbot = document.getElementById("close-chatbot");
   const chatbotOverlay = document.getElementById("chatbot-overlay");
   const userInput = document.getElementById("user-input");
-  const sendButton = document.getElementById("send-button");
 
-  // Open chatbot
-  chatbotBtn.addEventListener("click", function () {
-    chatbotPopup.style.display = "flex";
-    chatbotOverlay.style.display = "block";
-    userInput.focus();
-  });
+  if (chatbotBtn && chatbotPopup && closeChatbot && chatbotOverlay && userInput) {
+    const openChatbot = () => {
+      chatbotPopup.style.display = "flex";
+      chatbotOverlay.style.display = "block";
+      document.body.classList.add("chatbot-open");
+      userInput.focus();
+      ensureChatbotInViewport();
+    };
 
-  // Close chatbot
-  closeChatbot.addEventListener("click", function () {
-    chatbotPopup.style.display = "none";
-    chatbotOverlay.style.display = "none";
-  });
+    const closeChatbotPopup = () => {
+      chatbotPopup.style.display = "none";
+      chatbotOverlay.style.display = "none";
+      document.body.classList.remove("chatbot-open");
+    };
 
-  // Close chatbot when clicking outside
-  chatbotOverlay.addEventListener("click", function () {
-    chatbotPopup.style.display = "none";
-    chatbotOverlay.style.display = "none";
-  });
+    const ensureChatbotInViewport = () => {
+      if (chatbotPopup.style.display === "none") return;
 
-  // Send message when Enter is pressed
-  userInput.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") {
-      sendMessage();
+      const margin = 8;
+      const rect = chatbotPopup.getBoundingClientRect();
+      let left = rect.left;
+      let top = rect.top;
+
+      if (rect.right > window.innerWidth - margin) left -= rect.right - (window.innerWidth - margin);
+      if (rect.bottom > window.innerHeight - margin) top -= rect.bottom - (window.innerHeight - margin);
+      if (rect.left < margin) left = margin;
+      if (rect.top < margin) top = margin;
+
+      // Only set explicit coordinates if we need to move it
+      if (left !== rect.left || top !== rect.top) {
+        chatbotPopup.style.transform = "none";
+        chatbotPopup.style.right = "auto";
+        chatbotPopup.style.bottom = "auto";
+        chatbotPopup.style.left = `${left}px`;
+        chatbotPopup.style.top = `${top}px`;
+      }
+    };
+
+    // Open chatbot
+    chatbotBtn.addEventListener("click", openChatbot);
+
+    // Close chatbot
+    closeChatbot.addEventListener("click", closeChatbotPopup);
+
+    // Close chatbot when clicking outside
+    chatbotOverlay.addEventListener("click", closeChatbotPopup);
+
+    // Prevent scroll events from affecting the page behind the overlay
+    chatbotOverlay.addEventListener(
+      "wheel",
+      (e) => {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+    chatbotOverlay.addEventListener(
+      "touchmove",
+      (e) => {
+        e.preventDefault();
+      },
+      { passive: false }
+    );
+
+    // Send message when Enter is pressed
+    userInput.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") {
+        sendMessage();
+      }
+    });
+
+    // Draggable chatbot (drag handle: header)
+    const dragHandle = chatbotPopup.querySelector(".chatbot-header");
+    if (dragHandle) {
+      let isDragging = false;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      const onPointerMove = (e) => {
+        if (!isDragging) return;
+        const rect = chatbotPopup.getBoundingClientRect();
+        const margin = 8;
+
+        let nextLeft = e.clientX - offsetX;
+        let nextTop = e.clientY - offsetY;
+
+        const maxLeft = window.innerWidth - rect.width - margin;
+        const maxTop = window.innerHeight - rect.height - margin;
+
+        nextLeft = Math.min(Math.max(margin, nextLeft), Math.max(margin, maxLeft));
+        nextTop = Math.min(Math.max(margin, nextTop), Math.max(margin, maxTop));
+
+        chatbotPopup.style.left = `${nextLeft}px`;
+        chatbotPopup.style.top = `${nextTop}px`;
+      };
+
+      const stopDragging = () => {
+        if (!isDragging) return;
+        isDragging = false;
+        chatbotPopup.classList.remove("dragging");
+        document.removeEventListener("pointermove", onPointerMove);
+        document.removeEventListener("pointerup", stopDragging);
+      };
+
+      dragHandle.addEventListener("pointerdown", (e) => {
+        // Ignore clicks on the close button
+        if (e.target && e.target.closest("#close-chatbot")) return;
+
+        const rect = chatbotPopup.getBoundingClientRect();
+        chatbotPopup.style.transform = "none";
+        chatbotPopup.style.right = "auto";
+        chatbotPopup.style.bottom = "auto";
+        chatbotPopup.style.left = `${rect.left}px`;
+        chatbotPopup.style.top = `${rect.top}px`;
+
+        isDragging = true;
+        offsetX = e.clientX - rect.left;
+        offsetY = e.clientY - rect.top;
+        chatbotPopup.classList.add("dragging");
+
+        document.addEventListener("pointermove", onPointerMove);
+        document.addEventListener("pointerup", stopDragging);
+        e.preventDefault();
+      });
     }
-  });
+
+    window.addEventListener("resize", ensureChatbotInViewport);
+  }
 
   // Update copyright year dynamically
   const copyrightYear = document.getElementById("copyright-year");
@@ -552,13 +653,13 @@ function openProjectModal(projectIndex) {
   `;
   
   modal.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
+  document.body.classList.add('modal-open');
 }
 
 function closeProjectModal() {
   const modal = document.getElementById('project-modal');
   modal.style.display = 'none';
-  document.body.style.overflow = 'auto';
+  document.body.classList.remove('modal-open');
 }
 
 // Close modal when clicking outside
