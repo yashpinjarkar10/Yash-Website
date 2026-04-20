@@ -492,6 +492,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeChatbot = document.getElementById("close-chatbot");
   const chatbotOverlay = document.getElementById("chatbot-overlay");
   const userInput = document.getElementById("user-input");
+  const chatBox = document.getElementById("chat-box");
 
   if (chatbotBtn && chatbotPopup && closeChatbot && chatbotOverlay && userInput) {
     const openChatbot = () => {
@@ -562,6 +563,23 @@ document.addEventListener("DOMContentLoaded", function () {
         sendMessage();
       }
     });
+
+    // Clickable suggested questions
+    if (chatBox) {
+      chatBox.addEventListener("click", function (event) {
+        const button = event.target && event.target.closest
+          ? event.target.closest(".chat-suggestion")
+          : null;
+        if (!button) return;
+
+        const suggestion = button.getAttribute("data-suggestion") || "";
+        const text = suggestion.trim();
+        if (!text) return;
+
+        userInput.value = text;
+        sendMessage();
+      });
+    }
 
     // Draggable chatbot (drag handle: header)
     const dragHandle = chatbotPopup.querySelector(".chatbot-header");

@@ -1889,6 +1889,65 @@ body.modal-open {
   overscroll-behavior: contain;
 }
 
+/* Suggested questions (industry-style quick actions) */
+.chat-suggestions-title {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  color: rgba(0, 0, 0, 0.65);
+}
+
+.chat-suggestions {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.chat-suggestion {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: rgba(255, 255, 255, 0.85);
+  color: #272829;
+  font-size: 14px;
+  line-height: 1.35;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.chat-suggestion i {
+  flex: 0 0 auto;
+  font-size: 16px;
+  line-height: 1;
+  margin-top: 2px;
+  color: #3f7dbe;
+}
+
+.chat-suggestion span {
+  display: block;
+}
+
+.chat-suggestion:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(63, 125, 190, 0.35);
+}
+
+.chat-suggestion:active {
+  background: rgba(255, 255, 255, 1);
+}
+
+.chat-suggestion:focus-visible {
+  outline: 2px solid rgba(63, 125, 190, 0.55);
+  outline-offset: 2px;
+}
+
 /* Message Styling */
 .message {
   padding: 12px 18px;
