@@ -167,7 +167,9 @@
     let portfolioContainer = select('.portfolio-container');
     if (portfolioContainer) {
       let portfolioIsotope = new Isotope(portfolioContainer, {
-        itemSelector: '.portfolio-item'
+        itemSelector: '.portfolio-item',
+        layoutMode: 'fitRows',
+        percentPosition: true
       });
 
       let portfolioFilters = select('#portfolio-flters li', true);
@@ -350,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   projects.forEach((project, index) => {
       const projectHTML = `
-          <div class="col-lg-4 col-md-6 portfolio-item">
+          <div class="col-lg-4 col-md-4 portfolio-item">
               <div class="portfolio-wrap" onclick="openProjectModal(${index})" style="cursor: pointer;">
                   <img src="${project.image}" class="img-fluid" alt="">
                   <div class="portfolio-info">
@@ -625,6 +627,53 @@ document.addEventListener("DOMContentLoaded", function () {
     const currentYear = new Date().getFullYear();
     copyrightYear.textContent = `YashPinjarkar ${currentYear}`;
   }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const canvas = document.getElementById("resume-preview-canvas");
+  const fallback = document.getElementById("resume-preview-fallback");
+  const pdfUrl = "Resume-Y1.pdf";
+
+  if (!canvas || !fallback) return;
+  if (typeof window.pdfjsLib === "undefined") return;
+
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc =
+    "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+
+  async function renderFirstPage() {
+    try {
+      const loadingTask = window.pdfjsLib.getDocument({ url: pdfUrl });
+      const pdf = await loadingTask.promise;
+      const page = await pdf.getPage(1);
+
+      const container = canvas.parentElement;
+      const containerWidth = (container && container.clientWidth) ? container.clientWidth : 500;
+
+      const unscaledViewport = page.getViewport({ scale: 1 });
+      const scale = containerWidth / unscaledViewport.width;
+      const viewport = page.getViewport({ scale });
+
+      const outputScale = window.devicePixelRatio || 1;
+      canvas.width = Math.floor(viewport.width * outputScale);
+      canvas.height = Math.floor(viewport.height * outputScale);
+      canvas.style.width = Math.floor(viewport.width) + "px";
+      canvas.style.height = Math.floor(viewport.height) + "px";
+
+      const ctx = canvas.getContext("2d", { alpha: false });
+      ctx.setTransform(outputScale, 0, 0, outputScale, 0, 0);
+
+      await page.render({ canvasContext: ctx, viewport }).promise;
+      fallback.style.display = "none";
+    } catch (err) {
+      console.warn("Resume preview render failed:", err);
+      fallback.style.display = "flex";
+    }
+  }
+
+  // Render after layout so container width is accurate.
+  requestAnimationFrame(() => {
+    renderFirstPage();
+  });
 });
 
 // Project Modal Functions
