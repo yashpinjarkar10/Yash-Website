@@ -1334,12 +1334,14 @@ html {
   transform: scale(1.05);
 }
 
-.portfolio .portfolio-item {
+.portfolio .portfolio-item,
+.certificates .portfolio-item {
   display: block;
   margin-bottom: 24px;
 }
 
-.portfolio .portfolio-wrap {
+.portfolio .portfolio-wrap,
+.certificates .portfolio-wrap {
   width: 100%;
   height: 100%;
   display: flex;
@@ -1352,17 +1354,20 @@ html {
   transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 
-.portfolio .portfolio-wrap:hover {
+.portfolio .portfolio-wrap:hover,
+.certificates .portfolio-wrap:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 26px rgba(0, 0, 0, 0.08);
 }
 
 /* Disable the template hover overlay & absolute link bar for this card layout */
-.portfolio .portfolio-wrap::before {
+.portfolio .portfolio-wrap::before,
+.certificates .portfolio-wrap::before {
   display: none;
 }
 
-.portfolio .portfolio-wrap .portfolio-links {
+.portfolio .portfolio-wrap .portfolio-links,
+.certificates .portfolio-wrap .portfolio-links {
   position: static;
   left: auto;
   right: auto;
@@ -1376,11 +1381,13 @@ html {
   margin-top: auto;
 }
 
-.portfolio .portfolio-wrap:hover .portfolio-links {
+.portfolio .portfolio-wrap:hover .portfolio-links,
+.certificates .portfolio-wrap:hover .portfolio-links {
   bottom: auto;
 }
 
-.portfolio .portfolio-wrap > img {
+.portfolio .portfolio-wrap > img,
+.certificates .portfolio-wrap > img {
   width: 100%;
   aspect-ratio: 16 / 9;
   height: auto;
@@ -1389,7 +1396,8 @@ html {
   background: #f5f8fd;
 }
 
-.portfolio .portfolio-info {
+.portfolio .portfolio-info,
+.certificates .portfolio-info {
   padding: 16px;
   text-align: left;
   display: flex;
@@ -1399,7 +1407,8 @@ html {
   overflow: hidden;
 }
 
-.portfolio .portfolio-info h4 {
+.portfolio .portfolio-info h4,
+.certificates .portfolio-info h4 {
   font-size: 18px;
   font-weight: 700;
   margin: 0;
@@ -1413,7 +1422,8 @@ html {
   overflow: hidden;
 }
 
-.portfolio .portfolio-info p {
+.portfolio .portfolio-info p,
+.certificates .portfolio-info p {
   font-size: 14px;
   color: #666;
   margin: 0;
@@ -1426,7 +1436,8 @@ html {
   overflow: hidden;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a {
+.portfolio .portfolio-wrap .portfolio-links a,
+.certificates .portfolio-wrap .portfolio-links a {
   width: 40px;
   height: 40px;
   flex: 0 0 auto;
@@ -1440,22 +1451,26 @@ html {
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a:hover {
+.portfolio .portfolio-wrap .portfolio-links a:hover,
+.certificates .portfolio-wrap .portfolio-links a:hover {
   background: #149ddd;
   border-color: #149ddd;
   color: #fff;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a+a {
+.portfolio .portfolio-wrap .portfolio-links a+a,
+.certificates .portfolio-wrap .portfolio-links a+a {
   border-left: 0;
 }
 
-.portfolio .portfolio-wrap .portfolio-links a i {
+.portfolio .portfolio-wrap .portfolio-links a i,
+.certificates .portfolio-wrap .portfolio-links a i {
   font-size: 18px;
 }
 
 @media (max-width: 768px) {
-  .portfolio .portfolio-info {
+  .portfolio .portfolio-info,
+  .certificates .portfolio-info {
     min-height: 130px;
   }
 }
@@ -1463,68 +1478,7 @@ html {
 
 
 
-/* Certificates Section */
-/* Certificates Section */
-/* Certificates Section */
-.certificates .certificates-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-}
-
-.certificates .certificate-item {
-  background: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  width: 300px;
-  text-align: center;
-  transition: transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  position: relative; /* Required for absolute positioning */
-  padding-bottom: 80px; /* Space for the button */
-}
-
-.certificates .certificate-item:hover {
-  transform: translateY(-10px);
-}
-
-.certificates .certificate-item img {
-  width: 100%;
-  height: auto;
-}
-
-.certificates .certificate-item h4 {
-  margin: 15px 0;
-  font-size: 18px;
-}
-
-.certificates .certificate-item p {
-  padding: 0 15px 15px;
-  font-size: 14px;
-  color: #666;
-  flex-grow: 1; /* Ensures the description takes up available space */
-}
-
-.certificates .certificate-item .certificate-button {
-  position: absolute; /* Position the button absolutely */
-  bottom: 15px; /* Distance from the bottom */
-  margin-bottom: 15px;
-  transform: translateX(-50%); /* Center horizontally */
-  display: inline-block;
-  padding: 5px 15px;
-  background-color: #3f7dbe;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.certificates .certificate-item .certificate-button:hover {
-  background-color: #0056b3;
-}
+/* Certificates grid now reuses the same card styles as Projects (portfolio). */
 
 /* Resume Section */
 .resume {

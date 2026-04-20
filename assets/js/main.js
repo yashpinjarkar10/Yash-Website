@@ -424,14 +424,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   certificates.forEach(certificate => {
     const certificateHTML = `
-      <div class="col-lg-4 col-md-6 certificate-item">
-        <div class="certificate-wrap">
+      <div class="col-lg-4 col-md-4 portfolio-item">
+        <div class="portfolio-wrap" onclick="window.open('${certificate.link}', '_blank')" style="cursor: pointer;">
           <img src="${certificate.image}" class="img-fluid" alt="${certificate.title}">
-          <div class="certificate-info">
+          <div class="portfolio-info">
             <h4>${certificate.title}</h4>
             <p>${certificate.description}</p>
+            <div class="portfolio-links">
+              <a href="${certificate.link}" target="_blank" title="View Certificate" onclick="event.stopPropagation();"><i class="bx bx-link"></i></a>
+            </div>
           </div>
-          <a href="${certificate.link}" target="_blank" class="certificate-button">View Certificate</a>
         </div>
       </div>
     `;
