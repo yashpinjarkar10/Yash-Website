@@ -354,13 +354,13 @@ document.addEventListener("DOMContentLoaded", function () {
       const projectHTML = `
           <div class="col-lg-4 col-md-4 portfolio-item">
               <div class="portfolio-wrap" onclick="openProjectModal(${index})" style="cursor: pointer;">
-                  <img src="${project.image}" class="img-fluid" alt="">
+            <img src="${project.image}" class="img-fluid" alt="${project.title}" loading="lazy" decoding="async">
                   <div class="portfolio-info">
                       <h4>${project.title}</h4>
                       <p>${project.technologies}</p>
                       <div class="portfolio-links">
-                          <a href="${project.github}" target="_blank" title="GitHub" onclick="event.stopPropagation();"><i class="bx bxl-github"></i></a>
-                          <a href="${project.live}" target="_blank" title="Live Demo" onclick="event.stopPropagation();"><i class="bx bx-link"></i></a>
+                <a href="${project.github}" target="_blank" rel="noopener noreferrer" aria-label="Open ${project.title} on GitHub" title="GitHub" onclick="event.stopPropagation();"><i class="bx bxl-github"></i></a>
+                <a href="${project.live}" target="_blank" rel="noopener noreferrer" aria-label="Open live demo for ${project.title}" title="Live Demo" onclick="event.stopPropagation();"><i class="bx bx-link"></i></a>
                       </div>
                   </div>
               </div>
@@ -426,12 +426,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const certificateHTML = `
       <div class="col-lg-4 col-md-4 portfolio-item">
         <div class="portfolio-wrap" onclick="window.open('${certificate.link}', '_blank')" style="cursor: pointer;">
-          <img src="${certificate.image}" class="img-fluid" alt="${certificate.title}">
+          <img src="${certificate.image}" class="img-fluid" alt="${certificate.title}" loading="lazy" decoding="async">
           <div class="portfolio-info">
             <h4>${certificate.title}</h4>
             <p>${certificate.description}</p>
             <div class="portfolio-links">
-              <a href="${certificate.link}" target="_blank" title="View Certificate" onclick="event.stopPropagation();"><i class="bx bx-link"></i></a>
+              <a href="${certificate.link}" target="_blank" rel="noopener noreferrer" aria-label="Open certificate: ${certificate.title}" title="View Certificate" onclick="event.stopPropagation();"><i class="bx bx-link"></i></a>
             </div>
           </div>
         </div>
@@ -704,17 +704,17 @@ function openProjectModal(projectIndex) {
   
   modalContent.innerHTML = `
     <div class="modal-project-header">
-      <img src="${project.image}" alt="${project.title}" class="modal-project-image">
+      <img src="${project.image}" alt="${project.title}" class="modal-project-image" loading="lazy" decoding="async">
     </div>
     <div class="modal-project-body">
       <h3>${project.title}</h3>
       <p class="modal-project-tech"><strong>Technologies:</strong> ${project.technologies}</p>
       <p class="modal-project-description">${project.description}</p>
       <div class="modal-project-links">
-        <a href="${project.github}" target="_blank" class="modal-btn modal-btn-github">
+        <a href="${project.github}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-github">
           <i class="bx bxl-github"></i> View on GitHub
         </a>
-        <a href="${project.live}" target="_blank" class="modal-btn modal-btn-live">
+        <a href="${project.live}" target="_blank" rel="noopener noreferrer" class="modal-btn modal-btn-live">
           <i class="bx bx-link"></i> Live Demo
         </a>
       </div>
