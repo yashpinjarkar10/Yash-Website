@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!el) return;
 
     const CACHE_KEY = "leetcode_solved_cache_v1";
-    const HARDCODED_FALLBACK = "210";
+    const HARDCODED_FALLBACK = "229";
 
     // Safe localStorage helpers (private mode / disabled storage shouldn't break the page)
     const readCache = () => {
@@ -336,55 +336,59 @@ document.addEventListener("DOMContentLoaded", function () {
       return true;
     };
 
-    const proxies = [
-      (u) => "https://corsproxy.io/?url=" + encodeURIComponent(u),
-      (u) => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u),
-      (u) => "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent(u)
+    // Regex out the solved count from the scraped profile HTML.
+    // Targets the span shown on the profile:
+    //   <span class="text-xs font-medium text-label-1 ...">230</span>&nbsp;
+    //   <span class="text-label-3 ...">problems solved</span>
+    // Plus a couple of resilient fallbacks against the embedded __NEXT_DATA__ JSON.
+    const extractSolvedFromHtml = (html) => {
+      if (!html || typeof html !== "string") return null;
+      const patterns = [
+        /<span[^>]*text-label-1[^>]*>\s*(\d+)\s*<\/span>\s*(?:&nbsp;|\s)*<span[^>]*>\s*problems\s+solved/i,
+        /(\d+)\s*<\/span>\s*(?:&nbsp;|\s)*<span[^>]*>\s*problems\s+solved/i,
+        /"difficulty"\s*:\s*"All"\s*,\s*"count"\s*:\s*(\d+)/,
+        /"totalSolved"\s*:\s*(\d+)/
+      ];
+      for (const re of patterns) {
+        const m = html.match(re);
+        if (m && m[1]) {
+          const n = parseInt(m[1], 10);
+          if (!isNaN(n) && n > 0) return n;
+        }
+      }
+      return null;
+    };
+
+    // GET the public profile HTML through CORS proxies (GET = no preflight).
+    const profileUrl = `https://leetcode.com/u/${username}/`;
+    const scrapeSources = [
+      {
+        url: "https://api.allorigins.win/get?url=" + encodeURIComponent(profileUrl),
+        parse: async (res) => { const j = await res.json(); return j && j.contents; }
+      },
+      {
+        url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(profileUrl),
+        parse: async (res) => res.text()
+      },
+      {
+        url: "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent(profileUrl),
+        parse: async (res) => res.text()
+      },
+      {
+        url: "https://thingproxy.freeboard.io/fetch/" + profileUrl,
+        parse: async (res) => res.text()
+      }
     ];
 
-    // Primary: LeetCode GraphQL via public CORS proxies (no backend required)
-    const gqlBody = JSON.stringify({
-      query: `query getUserProfile($username: String!) {
-        matchedUser(username: $username) {
-          submitStatsGlobal { acSubmissionNum { difficulty count } }
-        }
-      }`,
-      variables: { username }
-    });
-
-    for (const buildUrl of proxies) {
+    for (const src of scrapeSources) {
       try {
-        const res = await fetch(buildUrl("https://leetcode.com/graphql"), {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: gqlBody
-        });
+        const res = await fetch(src.url);
         if (!res.ok) continue;
-        const data = await res.json();
-        const stats = data && data.data && data.data.matchedUser &&
-                      data.data.matchedUser.submitStatsGlobal &&
-                      data.data.matchedUser.submitStatsGlobal.acSubmissionNum;
-        if (Array.isArray(stats)) {
-          const all = stats.find(s => s.difficulty === "All");
-          if (all && setCount(all.count)) return;
-        }
+        const html = await src.parse(res);
+        const count = extractSolvedFromHtml(html);
+        if (count && setCount(count)) return;
       } catch (e) {
-        console.warn("LeetCode GraphQL proxy failed:", e);
-      }
-    }
-
-    // Fallback: scrape the public profile page and regex out the solved count
-    for (const buildUrl of proxies) {
-      try {
-        const res = await fetch(buildUrl(`https://leetcode.com/u/${username}/`));
-        if (!res.ok) continue;
-        const html = await res.text();
-        const m = html.match(/"acSubmissionNum"[\s\S]*?"difficulty"\s*:\s*"All"\s*,\s*"count"\s*:\s*(\d+)/) ||
-                  html.match(/"totalSolved"\s*:\s*(\d+)/) ||
-                  html.match(/(\d+)\s*<\/span>\s*<span[^>]*>\s*\/\s*\d+\s*<\/span>\s*Solved/i);
-        if (m && m[1] && setCount(parseInt(m[1], 10))) return;
-      } catch (e) {
-        console.warn("LeetCode scrape proxy failed:", e);
+        console.warn("LeetCode scrape source failed:", src.url, e);
       }
     }
 
