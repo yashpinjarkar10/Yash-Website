@@ -336,59 +336,33 @@ document.addEventListener("DOMContentLoaded", function () {
       return true;
     };
 
-    // Regex out the solved count from the scraped profile HTML.
-    // Targets the span shown on the profile:
-    //   <span class="text-xs font-medium text-label-1 ...">230</span>&nbsp;
-    //   <span class="text-label-3 ...">problems solved</span>
-    // Plus a couple of resilient fallbacks against the embedded __NEXT_DATA__ JSON.
-    const extractSolvedFromHtml = (html) => {
-      if (!html || typeof html !== "string") return null;
-      const patterns = [
-        /<span[^>]*text-label-1[^>]*>\s*(\d+)\s*<\/span>\s*(?:&nbsp;|\s)*<span[^>]*>\s*problems\s+solved/i,
-        /(\d+)\s*<\/span>\s*(?:&nbsp;|\s)*<span[^>]*>\s*problems\s+solved/i,
-        /"difficulty"\s*:\s*"All"\s*,\s*"count"\s*:\s*(\d+)/,
-        /"totalSolved"\s*:\s*(\d+)/
-      ];
-      for (const re of patterns) {
-        const m = html.match(re);
-        if (m && m[1]) {
-          const n = parseInt(m[1], 10);
-          if (!isNaN(n) && n > 0) return n;
-        }
-      }
-      return null;
-    };
-
-    // GET the public profile HTML through CORS proxies (GET = no preflight).
-    const profileUrl = `https://leetcode.com/u/${username}/`;
-    const scrapeSources = [
+    // Public LeetCode stats APIs that serve CORS-friendly JSON (they call
+    // LeetCode's GraphQL server-side, so the browser doesn't hit CORS).
+    // Each entry: { url, pick: (json) => number|null }
+    const sources = [
       {
-        url: "https://api.allorigins.win/get?url=" + encodeURIComponent(profileUrl),
-        parse: async (res) => { const j = await res.json(); return j && j.contents; }
+        url: `https://alfa-leetcode-api.onrender.com/${username}/solved`,
+        pick: (j) => (j && (j.solvedProblem ?? j.totalSolved)) || null
       },
       {
-        url: "https://api.allorigins.win/raw?url=" + encodeURIComponent(profileUrl),
-        parse: async (res) => res.text()
+        url: `https://leetcode-stats-api.cyclic.app/${username}`,
+        pick: (j) => (j && j.totalSolved) || null
       },
       {
-        url: "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent(profileUrl),
-        parse: async (res) => res.text()
-      },
-      {
-        url: "https://thingproxy.freeboard.io/fetch/" + profileUrl,
-        parse: async (res) => res.text()
+        url: `https://leetcode-api-faisalshohag.vercel.app/${username}`,
+        pick: (j) => (j && j.totalSolved) || null
       }
     ];
 
-    for (const src of scrapeSources) {
+    for (const src of sources) {
       try {
-        const res = await fetch(src.url);
+        const res = await fetch(src.url, { headers: { "Accept": "application/json" } });
         if (!res.ok) continue;
-        const html = await src.parse(res);
-        const count = extractSolvedFromHtml(html);
-        if (count && setCount(count)) return;
+        const data = await res.json();
+        const count = src.pick(data);
+        if (typeof count === "number" && setCount(count)) return;
       } catch (e) {
-        console.warn("LeetCode scrape source failed:", src.url, e);
+        console.warn("LeetCode source failed:", src.url, e);
       }
     }
 
