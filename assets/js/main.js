@@ -266,18 +266,134 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   async function fetchGitHubRepos() {
-      const githubUsername = "yashpinjarkar10";  // Replace with your GitHub username
+      const githubUsername = "yashpinjarkar10";
+      const el = document.getElementById("github-repos");
+      if (!el) return;
+      const CACHE_KEY = "github_repos_cache_v1";
+
+      let cachedCount = null;
       try {
-          const response = await fetch(`https://api.github.com/users/${githubUsername}/repos`);
+          const raw = localStorage.getItem(CACHE_KEY);
+          if (raw) {
+              const parsed = JSON.parse(raw);
+              if (parsed && typeof parsed.count === "number" && parsed.count > 0) {
+                  cachedCount = parsed.count;
+                  el.textContent = parsed.count;
+              }
+          }
+      } catch (_) {}
+
+      try {
+          const response = await fetch(`https://api.github.com/users/${githubUsername}/repos?per_page=100`);
+          if (!response.ok) throw new Error("HTTP " + response.status);
           const repos = await response.json();
-          document.getElementById("github-repos").textContent = repos.length;
+          if (Array.isArray(repos) && repos.length > 0) {
+              el.textContent = repos.length;
+              try { localStorage.setItem(CACHE_KEY, JSON.stringify({ count: repos.length, at: Date.now() })); } catch (_) {}
+              return;
+          }
+          throw new Error("Empty repos response");
       } catch (error) {
-          document.getElementById("github-repos").textContent = "Error fetching data";
-          console.error("GitHub API error:", error);
+          console.warn("GitHub API failed, keeping last-known value:", error);
+          if (cachedCount === null) el.textContent = "—";
       }
   }
 
   fetchGitHubRepos();
+
+  async function fetchLeetCodeSolved() {
+    const username = "Yashpinjarkar";
+    const el = document.getElementById("leetcode-solved");
+    if (!el) return;
+
+    const CACHE_KEY = "leetcode_solved_cache_v1";
+    const HARDCODED_FALLBACK = "210";
+
+    // Safe localStorage helpers (private mode / disabled storage shouldn't break the page)
+    const readCache = () => {
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (!raw) return null;
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.count === "number" && parsed.count > 0) return parsed;
+      } catch (_) {}
+      return null;
+    };
+    const writeCache = (count) => {
+      try {
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ count, at: Date.now() }));
+      } catch (_) {}
+    };
+
+    // Show cached value immediately (or hardcoded) so the user never sees "Loading..." for long
+    const cached = readCache();
+    el.textContent = cached ? String(cached.count) : HARDCODED_FALLBACK;
+
+    const setCount = (count) => {
+      if (typeof count !== "number" || !isFinite(count) || count <= 0) return false;
+      el.textContent = String(count);
+      writeCache(count);
+      return true;
+    };
+
+    const proxies = [
+      (u) => "https://corsproxy.io/?url=" + encodeURIComponent(u),
+      (u) => "https://api.allorigins.win/raw?url=" + encodeURIComponent(u),
+      (u) => "https://api.codetabs.com/v1/proxy/?quest=" + encodeURIComponent(u)
+    ];
+
+    // Primary: LeetCode GraphQL via public CORS proxies (no backend required)
+    const gqlBody = JSON.stringify({
+      query: `query getUserProfile($username: String!) {
+        matchedUser(username: $username) {
+          submitStatsGlobal { acSubmissionNum { difficulty count } }
+        }
+      }`,
+      variables: { username }
+    });
+
+    for (const buildUrl of proxies) {
+      try {
+        const res = await fetch(buildUrl("https://leetcode.com/graphql"), {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: gqlBody
+        });
+        if (!res.ok) continue;
+        const data = await res.json();
+        const stats = data && data.data && data.data.matchedUser &&
+                      data.data.matchedUser.submitStatsGlobal &&
+                      data.data.matchedUser.submitStatsGlobal.acSubmissionNum;
+        if (Array.isArray(stats)) {
+          const all = stats.find(s => s.difficulty === "All");
+          if (all && setCount(all.count)) return;
+        }
+      } catch (e) {
+        console.warn("LeetCode GraphQL proxy failed:", e);
+      }
+    }
+
+    // Fallback: scrape the public profile page and regex out the solved count
+    for (const buildUrl of proxies) {
+      try {
+        const res = await fetch(buildUrl(`https://leetcode.com/u/${username}/`));
+        if (!res.ok) continue;
+        const html = await res.text();
+        const m = html.match(/"acSubmissionNum"[\s\S]*?"difficulty"\s*:\s*"All"\s*,\s*"count"\s*:\s*(\d+)/) ||
+                  html.match(/"totalSolved"\s*:\s*(\d+)/) ||
+                  html.match(/(\d+)\s*<\/span>\s*<span[^>]*>\s*\/\s*\d+\s*<\/span>\s*Solved/i);
+        if (m && m[1] && setCount(parseInt(m[1], 10))) return;
+      } catch (e) {
+        console.warn("LeetCode scrape proxy failed:", e);
+      }
+    }
+
+    // All sources failed — keep whatever is already displayed (cached value or hardcoded fallback).
+    console.warn("LeetCode: all sources failed, keeping last-known value.");
+  }
+
+  // Never let LeetCode fetch errors break the page
+  fetchLeetCodeSolved().catch((e) => console.warn("LeetCode fetch crashed:", e));
 });
 document.addEventListener("DOMContentLoaded", function () {
   const projects = [
