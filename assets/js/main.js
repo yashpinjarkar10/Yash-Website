@@ -548,36 +548,169 @@ const lightbox = GLightbox({
 
 
 
+const CHAT_API_BASE_URL = "https://ai-persona-chatbot-uzdn.onrender.com";
+
+let currentSessionId = sessionStorage.getItem("chatbot_session_id") || null;
+let isChatRequestPending = false;
+
 async function sendMessage() {
   const inputField = document.getElementById("user-input");
+  const sendButton = document.getElementById("send-button");
   const message = inputField.value.trim();
-  if (message === "") return;
+  if (message === "" || isChatRequestPending) return;
 
   appendMessage("You", message);
   inputField.value = "";
+  isChatRequestPending = true;
+  if (sendButton) sendButton.disabled = true;
+
+  const chatBox = document.getElementById("chat-box");
+  const botMessageElement = document.createElement("div");
+  botMessageElement.classList.add("message", "bot");
+  botMessageElement.innerHTML = `<strong>Yash:</strong> <span class="typing-dots"><span>.</span><span>.</span><span>.</span></span>`;
+  chatBox.appendChild(botMessageElement);
+  chatBox.scrollTop = chatBox.scrollHeight;
 
   try {
-      const response = await fetch("https://yashpinjarkar10-webchat1.hf.space/chat", {
+      const response = await fetch(`${CHAT_API_BASE_URL}/chat`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ input: message })
+          body: JSON.stringify({ 
+              input: message,
+              session_id: currentSessionId
+          })
       });
 
-      const data = await response.json();
-      appendMessage("Yash", data.answer);
+      if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+      }
+
+      if (!response.body) {
+          throw new Error("Readable stream is not available in this browser.");
+      }
+
+      const reader = response.body.getReader();
+      const decoder = new TextDecoder("utf-8");
+      let buffer = "";
+      let answerText = "";
+      let latestStatus = "";
+
+      botMessageElement.innerHTML = `<strong>Yash:</strong> `;
+      const textContainer = document.createElement("span");
+      botMessageElement.appendChild(textContainer);
+
+      const renderStatus = (status) => {
+          latestStatus = status;
+          textContainer.innerHTML = `<span class="chat-status">${formatBotMessage(status)}</span>`;
+          chatBox.scrollTop = chatBox.scrollHeight;
+      };
+
+      const renderAnswer = (answer) => {
+          answerText = answer;
+          textContainer.innerHTML = formatBotMessage(answerText);
+          chatBox.scrollTop = chatBox.scrollHeight;
+      };
+
+      const handleSseBlock = (block) => {
+          const dataLines = block
+              .split(/\r?\n/)
+              .filter((line) => line.startsWith("data:"))
+              .map((line) => line.slice(5).trimStart());
+
+          if (!dataLines.length) return;
+
+          const data = dataLines.join("\n").trim();
+          if (!data || data === "[DONE]") return;
+
+          try {
+              const event = JSON.parse(data);
+
+              if (event.session_id) {
+                  currentSessionId = event.session_id;
+                  sessionStorage.setItem("chatbot_session_id", currentSessionId);
+              }
+
+              if (event.status) {
+                  renderStatus(event.status);
+              }
+
+              if (event.answer) {
+                  renderAnswer(event.answer);
+              }
+
+              if (event.error) {
+                  throw new Error(event.error);
+              }
+          } catch (error) {
+              if (error instanceof SyntaxError) {
+                  renderAnswer(data);
+                  return;
+              }
+              throw error;
+          }
+      };
+
+      while (true) {
+          const { value, done } = await reader.read();
+          if (value) {
+              const chunk = decoder.decode(value, { stream: !done });
+              buffer += chunk;
+
+              const blocks = buffer.split(/\r?\n\r?\n/);
+              buffer = blocks.pop() || "";
+              blocks.forEach(handleSseBlock);
+          }
+
+          if (done) break;
+      }
+
+      const remaining = buffer.trim();
+      if (remaining) handleSseBlock(remaining);
+
+      if (!answerText && latestStatus) {
+          textContainer.innerHTML = `<span class="chat-status">Request finished, but no answer was returned.</span>`;
+      }
   } catch (error) {
-      appendMessage("Yash", "Error connecting to server.");
+      console.error("Chat error:", error);
+      botMessageElement.innerHTML = `<strong>Yash:</strong> <span style="color: #d9534f;">Error connecting to the server. Please try again.</span>`;
+  } finally {
+      isChatRequestPending = false;
+      if (sendButton) sendButton.disabled = false;
+      inputField.focus();
   }
+}
+
+function formatBotMessage(text) {
+  // Safe HTML escapes
+  let formatted = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;");
+
+  // Bold text: **text**
+  formatted = formatted.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+
+  // Code blocks: ```code```
+  formatted = formatted.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+  // Inline code: `code`
+  formatted = formatted.replace(/`(.*?)`/g, "<code>$1</code>");
+
+  // New lines
+  formatted = formatted.replace(/\n/g, "<br>");
+
+  return formatted;
 }
 
 function appendMessage(sender, message) {
   const chatBox = document.getElementById("chat-box");
   const messageElement = document.createElement("div");
   messageElement.classList.add("message", sender === "You" ? "user" : "bot");
-  messageElement.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  messageElement.innerHTML = `<strong>${sender}:</strong> ${formatBotMessage(message)}`;
   chatBox.appendChild(messageElement);
   chatBox.scrollTop = chatBox.scrollHeight;
 }
+
 
 
 
