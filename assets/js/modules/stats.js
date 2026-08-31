@@ -49,7 +49,7 @@ export const fetchLeetCodeSolved = async () => {
   if (!el) return;
 
   const CACHE_KEY = 'leetcode_solved_cache_v1';
-  const HARDCODED_FALLBACK = '229';
+  const HARDCODED_FALLBACK = '350';
 
   const cached = readCache(CACHE_KEY);
   if (cached && typeof cached.count === 'number' && cached.count > 0) {
