@@ -1925,6 +1925,17 @@ body.modal-open {
   align-self: flex-start;
 }
 
+.message.bot a {
+  color: #0b6fae;
+  font-weight: 600;
+  text-decoration: underline;
+  overflow-wrap: anywhere;
+}
+
+.message.bot a:hover {
+  color: #084f7d;
+}
+
 /* Chatbot Input */
 .chatbot-input {
   display: flex;

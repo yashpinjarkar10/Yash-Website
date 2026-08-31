@@ -687,6 +687,12 @@ function formatBotMessage(text) {
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;");
 
+  // Markdown links: [label](https://example.com)
+  formatted = formatted.replace(
+    /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+  );
+
   // Bold text: **text**
   formatted = formatted.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
 
