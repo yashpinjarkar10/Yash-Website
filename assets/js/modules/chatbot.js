@@ -3,69 +3,114 @@ const CHAT_API_BASE_URL = 'https://ai-persona-chatbot-uzdn.onrender.com';
 let currentSessionId = sessionStorage.getItem('chatbot_session_id') || null;
 let isChatRequestPending = false;
 
+const DEFAULT_BOT_GREETING = `
+  <div class="message bot">
+    <strong>Yash:</strong> Hey! I’m Yash’s virtual self. Ask me anything about my autonomous agent systems, Astryx AI internship, or system architecture.
+  </div>
+`;
+
+export const openChatbot = () => {
+  const chatbotPopup = document.getElementById('chatbot-popup');
+  const chatbotOverlay = document.getElementById('chatbot-overlay');
+  const userInput = document.getElementById('user-input');
+  if (!chatbotPopup || !chatbotOverlay || !userInput) return;
+
+  chatbotPopup.style.left = '';
+  chatbotPopup.style.top = '';
+  chatbotPopup.style.right = '';
+  chatbotPopup.style.bottom = '';
+  chatbotPopup.style.transform = '';
+
+  chatbotPopup.classList.remove('is-expanded');
+  chatbotPopup.classList.add('active');
+  chatbotOverlay.classList.add('active');
+  chatbotPopup.style.display = 'flex';
+  chatbotOverlay.style.display = 'block';
+
+  document.body.classList.add('chatbot-open');
+  userInput.focus();
+};
+
+export const closeChatbotPopup = () => {
+  const chatbotPopup = document.getElementById('chatbot-popup');
+  const chatbotOverlay = document.getElementById('chatbot-overlay');
+  const userInput = document.getElementById('user-input');
+  const chatBox = document.getElementById('chat-box');
+
+  if (chatbotPopup) {
+    chatbotPopup.classList.remove('active', 'is-expanded');
+    chatbotPopup.style.display = 'none';
+  }
+  if (chatbotOverlay) {
+    chatbotOverlay.classList.remove('active');
+    chatbotOverlay.style.display = 'none';
+  }
+  document.body.classList.remove('chatbot-open');
+
+  // Reset conversation on close
+  if (userInput) userInput.value = '';
+  if (chatBox) chatBox.innerHTML = DEFAULT_BOT_GREETING;
+  currentSessionId = null;
+  sessionStorage.removeItem('chatbot_session_id');
+};
+
+export const askQuestion = (question) => {
+  const userInput = document.getElementById('user-input');
+  if (!userInput) return;
+  openChatbot();
+  userInput.value = question;
+  sendMessage();
+};
+
 /**
  * Initialize chatbot UI interactions.
  */
 export const initChatbot = () => {
   const chatbotBtn = document.getElementById('chatbot-btn');
-  const chatbotPopup = document.getElementById('chatbot-popup');
   const closeChatbot = document.getElementById('close-chatbot');
   const chatbotOverlay = document.getElementById('chatbot-overlay');
   const userInput = document.getElementById('user-input');
-  const chatBox = document.getElementById('chat-box');
+  const aiCapsuleForm = document.getElementById('ai-capsule-form');
 
-  if (!chatbotBtn || !chatbotPopup || !closeChatbot || !chatbotOverlay || !userInput) return;
+  if (chatbotBtn) chatbotBtn.addEventListener('click', openChatbot);
+  if (closeChatbot) closeChatbot.addEventListener('click', closeChatbotPopup);
+  if (chatbotOverlay) chatbotOverlay.addEventListener('click', closeChatbotPopup);
 
-  const openChatbot = () => {
-    chatbotPopup.style.display = 'flex';
-    chatbotOverlay.style.display = 'block';
-    document.body.classList.add('chatbot-open');
-    userInput.focus();
-    ensureChatbotInViewport(chatbotPopup);
-  };
+  if (chatbotOverlay) {
+    chatbotOverlay.addEventListener('wheel', (e) => e.preventDefault(), { passive: false });
+    chatbotOverlay.addEventListener('touchmove', (e) => e.preventDefault(), { passive: false });
+  }
 
-  const closeChatbotPopup = () => {
-    chatbotPopup.style.display = 'none';
-    chatbotOverlay.style.display = 'none';
-    document.body.classList.remove('chatbot-open');
-  };
-
-  chatbotBtn.addEventListener('click', openChatbot);
-  closeChatbot.addEventListener('click', closeChatbotPopup);
-  chatbotOverlay.addEventListener('click', closeChatbotPopup);
-
-  chatbotOverlay.addEventListener('wheel', (e) => {
-    e.preventDefault();
-  }, { passive: false });
-
-  chatbotOverlay.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-  }, { passive: false });
-
-  userInput.addEventListener('keypress', (event) => {
-    if (event.key === 'Enter') {
-      sendMessage();
-    }
+  // Handle ESC key to close
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeChatbotPopup();
   });
 
-  if (chatBox) {
-    chatBox.addEventListener('click', (event) => {
-      const button = event.target && event.target.closest
-        ? event.target.closest('.chat-suggestion')
-        : null;
-      if (!button) return;
+  if (userInput) {
+    userInput.addEventListener('keypress', (event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        sendMessage();
+      }
+    });
+  }
 
-      const suggestion = button.getAttribute('data-suggestion') || '';
-      const text = suggestion.trim();
-      if (!text) return;
-
-      userInput.value = text;
+  if (aiCapsuleForm) {
+    aiCapsuleForm.addEventListener('submit', (e) => {
+      e.preventDefault();
       sendMessage();
     });
   }
 
-  setupDraggable(chatbotPopup);
-  window.addEventListener('resize', () => ensureChatbotInViewport(chatbotPopup));
+  // Delegate pill buttons inside the modal
+  document.addEventListener('click', (event) => {
+    const pill = event.target && event.target.closest ? event.target.closest('.ai-capsule-modal .prompt-tool-pill') : null;
+    if (pill) {
+      event.preventDefault();
+      const prompt = pill.getAttribute('data-prompt');
+      if (prompt) askQuestion(prompt);
+    }
+  });
 };
 
 /**
@@ -75,10 +120,16 @@ export const initChatbot = () => {
 export const sendMessage = async () => {
   const inputField = document.getElementById('user-input');
   const sendButton = document.getElementById('send-button');
+  const chatbotPopup = document.getElementById('chatbot-popup');
   if (!inputField) return;
 
   const message = inputField.value.trim();
   if (message === '' || isChatRequestPending) return;
+
+  // Smoothly expand the modal from horizontal capsule to full conversational window
+  if (chatbotPopup) {
+    chatbotPopup.classList.add('is-expanded');
+  }
 
   appendMessage('You', message);
   inputField.value = '';
@@ -241,6 +292,7 @@ const appendMessage = (sender, message) => {
  */
 const ensureChatbotInViewport = (chatbotPopup) => {
   if (chatbotPopup.style.display === 'none') return;
+  if (!chatbotPopup.classList.contains('has-been-dragged')) return;
 
   const margin = 8;
   const rect = chatbotPopup.getBoundingClientRect();
@@ -311,6 +363,7 @@ const setupDraggable = (chatbotPopup) => {
     chatbotPopup.style.top = `${rect.top}px`;
 
     isDragging = true;
+    chatbotPopup.classList.add('has-been-dragged');
     offsetX = e.clientX - rect.left;
     offsetY = e.clientY - rect.top;
     chatbotPopup.classList.add('dragging');

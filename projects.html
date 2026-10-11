@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Projects & Architecture — Yash Pinjarkar</title>
+  <meta name="description" content="Explore autonomous agents, LangGraph architectures, high-performance backends, and machine learning systems built by Yash Pinjarkar.">
+  <meta name="keywords" content="Yash Pinjarkar, AI Engineer, LangGraph, FastAPI, Autonomous Agents, GraphRAG, PineScript, Machine Learning, Systems Architecture">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+
+  <!-- Core Styles -->
+  <link href="assets/css/design-system.css" rel="stylesheet">
+</head>
+
+<body class="site-modern">
+  <div class="bg-ambient"></div>
+
+  <!-- ======= Modern Header Navigation ======= -->
+  <nav class="site-nav">
+    <div class="site-nav-container">
+      <a href="index.html" class="site-logo">
+        <img src="assets/img/profile-img.jpg" alt="Yash Pinjarkar" class="site-logo-avatar">
+        <div class="site-logo-text">
+          <span class="site-logo-name">Yash Pinjarkar</span>
+          <span class="site-logo-role">AI & Systems Engineer</span>
+        </div>
+      </a>
+
+      <ul class="site-nav-links">
+        <li><a href="index.html" class="site-nav-link">Home</a></li>
+        <li><a href="about.html" class="site-nav-link">About & Experience</a></li>
+        <li><a href="projects.html" class="site-nav-link active">Projects</a></li>
+        <li><a href="certificates.html" class="site-nav-link">Certificates</a></li>
+        <li><a href="contact.html" class="site-nav-link">Contact</a></li>
+      </ul>
+
+      <div class="site-nav-actions">
+        <button id="chatbot-btn" class="btn-ai-chat" aria-label="Open AI Assistant">
+          <i class="bi bi-robot"></i> <span>Ask AI</span>
+        </button>
+        <a href="Resume-Y1.pdf" target="_blank" rel="noopener noreferrer" class="btn-resume-nav">
+          <i class="bi bi-file-earmark-pdf"></i> Resume
+        </a>
+        <button class="site-nav-mobile-toggle" aria-label="Toggle Navigation Menu">
+          <i class="bi bi-list"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-nav-drawer">
+    <a href="index.html" class="mobile-nav-link">Home</a>
+    <a href="about.html" class="mobile-nav-link">About & Experience</a>
+    <a href="projects.html" class="mobile-nav-link active">Projects</a>
+    <a href="certificates.html" class="mobile-nav-link">Certificates</a>
+    <a href="contact.html" class="mobile-nav-link">Contact</a>
+    <div style="margin-top: 16px; display: flex; gap: 12px;">
+      <a href="Resume-Y1.pdf" target="_blank" class="btn-primary-action" style="flex: 1;">
+        <i class="bi bi-download"></i> Resume
+      </a>
+    </div>
+  </div>
+
+  <!-- ======= Main Content Area ======= -->
+  <main class="site-main">
+    <div class="site-container">
+      
+      <!-- Page Header -->
+      <header class="page-header">
+        <div class="page-badge">
+          <span class="pulse-dot"></span>
+          <span>Catalog & Systems Showcase</span>
+        </div>
+        <h1 class="page-title">Selected Projects & Systems</h1>
+        <p class="page-description">
+          A collection of production-ready autonomous multi-agent pipelines, domain-specific GraphRAG applications, real-time streaming backends, and machine learning models.
+        </p>
+
+        <!-- Category Filters & Search -->
+        <div class="project-filters">
+          <button class="filter-btn active" data-filter="all">All Projects</button>
+          <button class="filter-btn" data-filter="agentic-ai">Agentic AI & GenAI</button>
+          <button class="filter-btn" data-filter="backend-systems">Backend Systems</button>
+          <button class="filter-btn" data-filter="machine-learning">Machine Learning</button>
+
+          <div class="search-box-wrap">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" id="project-search-input" class="search-input" placeholder="Search by tech or keyword...">
+          </div>
+        </div>
+      </header>
+
+      <!-- Dynamic Projects Grid -->
+      <section class="projects-grid" id="projects-catalog-grid" aria-live="polite">
+        <!-- Injected via projects-page.js -->
+      </section>
+
+    </div>
+  </main>
+
+  <!-- ======= Footer ======= -->
+  <footer style="border-top: 1px solid var(--border-subtle); padding: 36px 0; background: var(--bg-deep);">
+    <div class="site-container" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+      <div>
+        <p style="margin: 0; color: var(--text-secondary); font-size: 0.9rem;">
+          &copy; <span id="copyright-year">Yash Pinjarkar</span>. Engineered with clean architecture.
+        </p>
+      </div>
+      <div style="display: flex; gap: 16px;">
+        <a href="https://github.com/yashpinjarkar10/" target="_blank" rel="noopener noreferrer" class="action-icon-link" aria-label="GitHub"><i class="bx bxl-github"></i></a>
+        <a href="https://leetcode.com/Yashpinjarkar/" target="_blank" rel="noopener noreferrer" class="action-icon-link" aria-label="LeetCode"><i class="bx bx-code-curly"></i></a>
+        <a href="https://www.linkedin.com/in/yash-pinjarkar-b7a61b259" target="_blank" rel="noopener noreferrer" class="action-icon-link" aria-label="LinkedIn"><i class="bx bxl-linkedin"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Central AI Persona Dialog / Expanding Capsule -->
+  <div id="chatbot-popup" class="ai-capsule-modal">
+    <div class="ai-capsule-header">
+      <div class="ai-capsule-header-title">
+        <span class="pulse-dot"></span>
+        <span class="ai-capsule-title-text">Yash's AI Persona</span>
+        <span class="ai-capsule-status-pill">● Online</span>
+      </div>
+      <button id="close-chatbot" class="ai-capsule-close-btn" aria-label="Close AI Dialog">&times;</button>
+    </div>
+
+    <div id="chat-box" class="ai-capsule-messages">
+      <div class="message bot">
+        <strong>Yash:</strong> Hey! I’m Yash’s virtual self. Ask me anything about my projects, architecture, or tech stack.
+      </div>
+    </div>
+
+    <div class="ai-capsule-dock">
+      <div class="ai-capsule-pills">
+        <button type="button" class="prompt-tool-pill" data-prompt="Explain the 13-Agent Trading Graph architecture">
+          <i class="bi bi-diagram-3"></i> ⟡ Trading Agent
+        </button>
+        <button type="button" class="prompt-tool-pill" data-prompt="How does Cursor 2D Animation perform AST self-repair?">
+          <i class="bi bi-code-slash"></i> ◈ Cursor 2D
+        </button>
+        <button type="button" class="prompt-tool-pill" data-prompt="How did you implement pgvector semantic retrieval in AI Persona Chatbot?">
+          <i class="bi bi-database"></i> ● AI Chatbot
+        </button>
+      </div>
+
+      <form id="ai-capsule-form" class="ai-capsule-input-row" onsubmit="return false;">
+        <input 
+          id="user-input" 
+          type="text" 
+          class="ai-capsule-input" 
+          placeholder="Ask about any project or system architecture..." 
+          autocomplete="off"
+        />
+        <div class="ai-capsule-input-actions">
+          <button type="button" id="ai-capsule-mic" class="ai-capsule-mic-btn" title="Voice Input" aria-label="Voice Input">
+            <i class="bi bi-mic-fill"></i>
+          </button>
+          <button type="submit" id="send-button" class="ai-capsule-send-btn" title="Send Query" aria-label="Send Query">
+            <i class="bi bi-send-fill"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div id="chatbot-overlay"></div>
+
+  <!-- Scripts -->
+  <script type="module">
+    import { initSiteLayout } from './assets/js/modules/site-layout.js';
+    import { initProjectsCatalog } from './assets/js/modules/projects-page.js';
+    import { initChatbot, sendMessage } from './assets/js/modules/chatbot.js';
+
+    window.sendMessage = sendMessage;
+
+    initSiteLayout();
+    initProjectsCatalog();
+    initChatbot();
+  </script>
+</body>
+
+</html>
