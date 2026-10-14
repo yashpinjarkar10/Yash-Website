@@ -9,23 +9,90 @@ const DEFAULT_BOT_GREETING = `
   </div>
 `;
 
-export const openChatbot = () => {
+let lastOriginTransform = null;
+
+const computeOriginTransform = (triggerEl, modalEl) => {
+  const modalRect = modalEl.getBoundingClientRect();
+  const modalW = modalRect.width || Math.min(window.innerWidth * 0.92, 680);
+  const modalH = modalRect.height || 540;
+
+  let btn = triggerEl;
+  if (!btn || !btn.getBoundingClientRect) {
+    btn = document.getElementById('chatbot-btn');
+  }
+
+  if (btn && typeof btn.getBoundingClientRect === 'function') {
+    const btnRect = btn.getBoundingClientRect();
+    if (btnRect.width > 0 && btnRect.height > 0) {
+      const btnCenterX = btnRect.left + btnRect.width / 2;
+      const btnCenterY = btnRect.top + btnRect.height / 2;
+      const modalCenterX = window.innerWidth / 2;
+      const modalCenterY = window.innerHeight / 2;
+
+      const deltaX = Math.round(btnCenterX - modalCenterX);
+      const deltaY = Math.round(btnCenterY - modalCenterY);
+      const scaleX = +(btnRect.width / modalW).toFixed(4);
+      const scaleY = +(btnRect.height / modalH).toFixed(4);
+
+      return {
+        collapsed: `translate(calc(-50% + ${deltaX}px), calc(-50% + ${deltaY}px)) scale(${scaleX}, ${scaleY})`,
+        expanded: 'translate(-50%, -50%) scale(1)'
+      };
+    }
+  }
+
+  return {
+    collapsed: 'translate(-50%, -46%) scale(0.85)',
+    expanded: 'translate(-50%, -50%) scale(1)'
+  };
+};
+
+export const openChatbot = (eventOrEl = null) => {
   const chatbotPopup = document.getElementById('chatbot-popup');
   const chatbotOverlay = document.getElementById('chatbot-overlay');
   const userInput = document.getElementById('user-input');
   if (!chatbotPopup || !chatbotOverlay || !userInput) return;
 
+  let triggerEl = null;
+  if (eventOrEl) {
+    if (eventOrEl.currentTarget) triggerEl = eventOrEl.currentTarget;
+    else if (eventOrEl.target) triggerEl = eventOrEl.target.closest('#chatbot-btn') || eventOrEl.target;
+    else if (eventOrEl.nodeType) triggerEl = eventOrEl;
+  }
+  if (!triggerEl) {
+    triggerEl = document.getElementById('chatbot-btn');
+  }
+
+  chatbotPopup.classList.remove('is-expanded');
   chatbotPopup.style.left = '';
   chatbotPopup.style.top = '';
   chatbotPopup.style.right = '';
   chatbotPopup.style.bottom = '';
-  chatbotPopup.style.transform = '';
 
-  chatbotPopup.classList.remove('is-expanded');
-  chatbotPopup.classList.add('active');
-  chatbotOverlay.classList.add('active');
+  // Make visible in DOM to measure
   chatbotPopup.style.display = 'flex';
   chatbotOverlay.style.display = 'block';
+
+  // 1. Calculate geometry from trigger button to center of screen
+  const transforms = computeOriginTransform(triggerEl, chatbotPopup);
+  lastOriginTransform = transforms.collapsed;
+
+  // 2. Set to collapsed pill position at the button (no transition)
+  chatbotPopup.style.transition = 'none';
+  chatbotPopup.style.transform = transforms.collapsed;
+  chatbotPopup.style.borderRadius = '999px';
+  chatbotPopup.style.opacity = '0';
+
+  // 3. Force browser reflow
+  void chatbotPopup.offsetWidth;
+
+  // 4. Restore smooth Apple spring curve and expand out onto the screen!
+  chatbotPopup.style.transition = '';
+  chatbotPopup.classList.add('active');
+  chatbotOverlay.classList.add('active');
+  chatbotPopup.style.transform = transforms.expanded;
+  chatbotPopup.style.borderRadius = '26px';
+  chatbotPopup.style.opacity = '1';
 
   document.body.classList.add('chatbot-open');
   userInput.focus();
@@ -37,15 +104,35 @@ export const closeChatbotPopup = () => {
   const userInput = document.getElementById('user-input');
   const chatBox = document.getElementById('chat-box');
 
-  if (chatbotPopup) {
-    chatbotPopup.classList.remove('active', 'is-expanded');
-    chatbotPopup.style.display = 'none';
-  }
   if (chatbotOverlay) {
     chatbotOverlay.classList.remove('active');
-    chatbotOverlay.style.display = 'none';
   }
   document.body.classList.remove('chatbot-open');
+
+  if (chatbotPopup) {
+    chatbotPopup.classList.remove('active', 'is-expanded');
+
+    // Morph and shrink smoothly back INTO the "Ask AI" button!
+    if (lastOriginTransform) {
+      chatbotPopup.style.transform = lastOriginTransform;
+      chatbotPopup.style.borderRadius = '999px';
+      chatbotPopup.style.opacity = '0';
+    } else {
+      chatbotPopup.style.transform = 'translate(-50%, -46%) scale(0.85)';
+      chatbotPopup.style.opacity = '0';
+    }
+
+    setTimeout(() => {
+      if (!chatbotPopup.classList.contains('active')) {
+        chatbotPopup.style.display = 'none';
+        chatbotPopup.style.transform = '';
+        chatbotPopup.style.borderRadius = '';
+      }
+      if (chatbotOverlay && !chatbotOverlay.classList.contains('active')) {
+        chatbotOverlay.style.display = 'none';
+      }
+    }, 450);
+  }
 
   // Reset conversation on close
   if (userInput) userInput.value = '';

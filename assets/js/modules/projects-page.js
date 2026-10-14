@@ -1,4 +1,5 @@
 import { projectsData, getProjectById } from '../data/projects.js';
+import { initCardSpotlight } from './site-layout.js';
 
 /**
  * Initialize Projects Catalog Page (projects.html)
@@ -69,14 +70,63 @@ export const initProjectsCatalog = () => {
     `
       )
       .join('');
+    initCardSpotlight();
   };
 
-  // Wire Category Filters
-  const filterButtons = document.querySelectorAll('.filter-btn');
+  // Wire Category Filters with Sliding Magic Pill
+  const pillGroup = document.querySelector('.filter-pill-group');
+  const filterButtons = Array.from(document.querySelectorAll('.filter-btn'));
+
+  let slidingPill = null;
+  if (pillGroup) {
+    slidingPill = pillGroup.querySelector('.filter-sliding-pill');
+    if (!slidingPill) {
+      slidingPill = document.createElement('span');
+      slidingPill.className = 'filter-sliding-pill';
+      pillGroup.prepend(slidingPill);
+    }
+    pillGroup.classList.add('pill-initialized');
+  }
+
+  const movePillTo = (btn, animate = true) => {
+    if (!slidingPill || !pillGroup || !btn) return;
+    const groupRect = pillGroup.getBoundingClientRect();
+    const btnRect = btn.getBoundingClientRect();
+    const left = Math.round(btnRect.left - groupRect.left);
+    const width = Math.round(btnRect.width);
+
+    if (!animate) {
+      slidingPill.style.transition = 'none';
+      slidingPill.style.transform = `translate3d(${left}px, 0, 0)`;
+      slidingPill.style.width = `${width}px`;
+      slidingPill.style.opacity = '1';
+      void slidingPill.offsetWidth;
+      slidingPill.style.transition = '';
+    } else {
+      slidingPill.style.transform = `translate3d(${left}px, 0, 0)`;
+      slidingPill.style.width = `${width}px`;
+      slidingPill.style.opacity = '1';
+    }
+  };
+
+  const initialActiveBtn = filterButtons.find((b) => b.classList.contains('active')) || filterButtons[0];
+  if (initialActiveBtn) {
+    requestAnimationFrame(() => movePillTo(initialActiveBtn, false));
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => movePillTo(initialActiveBtn, false));
+    }
+  }
+
+  window.addEventListener('resize', () => {
+    const curActive = filterButtons.find((b) => b.classList.contains('active'));
+    if (curActive) movePillTo(curActive, false);
+  });
+
   filterButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       filterButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
+      movePillTo(btn, true);
       currentCategory = btn.getAttribute('data-filter') || 'all';
       render();
     });

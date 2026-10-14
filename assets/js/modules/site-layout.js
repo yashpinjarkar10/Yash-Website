@@ -42,6 +42,12 @@ export const initSiteLayout = () => {
   // Smooth iOS-style dynamic sliding indicator line
   initNavbarIndicator(currentPath);
 
+  // Subtle interactive card spotlight glow
+  initCardSpotlight();
+
+  // Staggered scroll-reveal
+  initScrollReveal();
+
   // Copyright year
   const copyrightYear = document.getElementById('copyright-year');
   if (copyrightYear) {
@@ -214,4 +220,81 @@ export const initNavbarIndicator = (currentPath = '') => {
       }
     });
   }
+};
+
+/**
+ * Interactive card spotlight border glow (Linear/macOS style)
+ */
+export const initCardSpotlight = () => {
+  const attachCards = () => {
+    const cards = document.querySelectorAll(
+      '.project-card, .detail-section, .sidebar-card, .cert-card, .timeline-content, .stat-metric-item'
+    );
+    cards.forEach((card) => {
+      if (!card.classList.contains('spotlight-card')) {
+        card.classList.add('spotlight-card');
+      }
+    });
+  };
+
+  attachCards();
+
+  let isTicking = false;
+  document.addEventListener(
+    'pointermove',
+    (e) => {
+      if (isTicking) return;
+      isTicking = true;
+      requestAnimationFrame(() => {
+        isTicking = false;
+        const target = e.target.closest('.spotlight-card');
+        if (target) {
+          const rect = target.getBoundingClientRect();
+          const x = Math.round(e.clientX - rect.left);
+          const y = Math.round(e.clientY - rect.top);
+          target.style.setProperty('--mouse-x', `${x}px`);
+          target.style.setProperty('--mouse-y', `${y}px`);
+        }
+      });
+    },
+    { passive: true }
+  );
+};
+
+/**
+ * Smooth Apple-style staggered scroll-reveal
+ */
+export const initScrollReveal = () => {
+  const elements = Array.from(
+    document.querySelectorAll(
+      '.project-card, .detail-section, .sidebar-card, .timeline-item, .cert-card, .tech-horizon-strip'
+    )
+  );
+  if (!elements.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -20px 0px' }
+  );
+
+  elements.forEach((el) => {
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('is-revealed');
+    } else {
+      el.classList.add('reveal-on-scroll');
+      const siblingIndex = Array.from(el.parentElement?.children || []).indexOf(el);
+      if (siblingIndex > 0 && siblingIndex < 6) {
+        el.style.transitionDelay = `${siblingIndex * 60}ms`;
+      }
+      observer.observe(el);
+    }
+  });
 };

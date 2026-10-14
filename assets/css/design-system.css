@@ -842,6 +842,37 @@ body.site-modern h6 {
   border-bottom: 1px solid var(--border-subtle);
 }
 
+.filter-pill-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  position: relative;
+  padding: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+}
+
+.filter-sliding-pill {
+  position: absolute;
+  top: 4px;
+  left: 0;
+  bottom: 4px;
+  background: #ffffff;
+  border-radius: var(--radius-pill);
+  box-shadow: 0 4px 18px rgba(255, 255, 255, 0.25), 0 2px 6px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate3d(0, 0, 0);
+  width: 0;
+  will-change: transform, width, opacity;
+  transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              width 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.2s ease;
+  z-index: 1;
+}
+
 .filter-btn {
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border-subtle);
@@ -851,7 +882,11 @@ body.site-modern h6 {
   padding: 8px 18px;
   border-radius: var(--radius-pill);
   cursor: pointer;
-  transition: all 0.25s var(--ease-spring);
+  position: relative;
+  z-index: 2;
+  transition: color 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.25s var(--ease-spring),
+              border-color 0.25s var(--ease-spring);
 }
 
 .filter-btn:hover {
@@ -865,6 +900,25 @@ body.site-modern h6 {
   border-color: #ffffff;
   font-weight: 700;
   box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+}
+
+/* When smooth sliding pill is initialized */
+.filter-pill-group.pill-initialized .filter-btn {
+  background: transparent !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.filter-pill-group.pill-initialized .filter-btn.active {
+  color: #030712 !important;
+}
+
+.filter-pill-group.pill-initialized .filter-btn:not(.active) {
+  color: var(--text-secondary);
+}
+
+.filter-pill-group.pill-initialized .filter-btn:hover:not(.active) {
+  color: #ffffff;
 }
 
 .search-box-wrap {
@@ -1592,14 +1646,14 @@ body.chatbot-open {
   inset: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(3, 7, 18, 0.28);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+  background: rgba(3, 7, 18, 0.45);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: none;
   z-index: 10005;
   overscroll-behavior: contain;
   opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 #chatbot-overlay.active {
@@ -1612,16 +1666,16 @@ body.chatbot-open {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.96);
+  transform: translate(-50%, -50%);
   width: 92vw;
   max-width: 680px;
-  background: rgba(8, 14, 32, 0.8);
-  backdrop-filter: blur(26px);
-  -webkit-backdrop-filter: blur(26px);
-  border: 1px solid rgba(56, 189, 248, 0.38);
+  background: rgba(8, 14, 32, 0.88);
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
+  border: 1px solid rgba(56, 189, 248, 0.4);
   border-radius: 26px;
   box-shadow: 
-    0 25px 70px -10px rgba(0, 0, 0, 0.75),
+    0 25px 70px -10px rgba(0, 0, 0, 0.8),
     0 0 50px rgba(37, 99, 235, 0.35),
     var(--glass-inner);
   z-index: 10006;
@@ -1629,8 +1683,11 @@ body.chatbot-open {
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+  transform-origin: center center;
+  will-change: transform, opacity, border-radius;
   transition: 
-    transform 0.38s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.46s cubic-bezier(0.16, 1, 0.3, 1),
+    border-radius 0.46s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -1638,7 +1695,7 @@ body.chatbot-open {
   display: flex;
   opacity: 1;
   pointer-events: auto;
-  transform: translate(-50%, -50%) scale(1);
+  border-radius: 26px;
 }
 
 /* Header */
@@ -1913,3 +1970,52 @@ body.chatbot-open {
     display: none;
   }
 }
+
+/* ==========================================================================
+   Smooth Interactive Enhancements: Spotlight & Staggered Scroll-Reveal
+   ========================================================================== */
+
+/* Card Spotlight Glow */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    360px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(0, 240, 255, 0.45),
+    transparent 55%
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  z-index: 2;
+}
+
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Staggered Scroll-Reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+  transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-on-scroll.is-revealed {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+

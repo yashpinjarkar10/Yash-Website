@@ -322,8 +322,8 @@
             </div>
             <div class="stat-metric-item">
               <div
-                style="font-size: 2.2rem; font-weight: 800; color: var(--accent-emerald); font-family: var(--font-mono);">
-                2</div>
+                style="font-size: 2.2rem; font-weight: 800; color: var(--accent-emerald); font-family: var(--font-mono);"
+                id="products-built" data-target="2">0</div>
               <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase;">Product Built</div>
             </div>
           </div>
@@ -451,7 +451,7 @@
   <script type="module">
     import { initSiteLayout } from './assets/js/modules/site-layout.js';
     import { initChatbot, sendMessage } from './assets/js/modules/chatbot.js';
-    import { fetchGitHubRepos, fetchLeetCodeSolved } from './assets/js/modules/stats.js';
+    import { fetchGitHubRepos, fetchLeetCodeSolved, initStaticMetrics } from './assets/js/modules/stats.js';
 
     window.sendMessage = sendMessage;
 
@@ -459,6 +459,7 @@
     initChatbot();
     fetchGitHubRepos();
     fetchLeetCodeSolved().catch((err) => console.warn('LeetCode fetch:', err));
+    initStaticMetrics();
 
     // Initialize Typed.js for personal roles
     const selectTyped = document.querySelector('.typed');

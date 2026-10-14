@@ -1,7 +1,57 @@
 import { readCache, writeCache } from '../utils/cache.js';
 
 /**
- * Fetch and display GitHub repository count.
+ * Smooth Apple-style rolling number animation using easeOutExpo
+ */
+export const animateCount = (el, target, duration = 1200, suffix = '') => {
+  if (!el || typeof target !== 'number' || isNaN(target)) return;
+
+  const rawCurrent = el.textContent.replace(/[^0-9]/g, '');
+  const start = rawCurrent ? parseInt(rawCurrent, 10) : 0;
+  if (start === target && el.textContent.includes(String(target))) {
+    el.textContent = `${target}${suffix}`;
+    return;
+  }
+
+  const startTime = performance.now();
+
+  const update = (now) => {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    // Apple easeOutExpo: 1 - 2^(-10 * progress)
+    const ease = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+    const current = Math.floor(start + (target - start) * ease);
+
+    el.textContent = `${current}${suffix}`;
+
+    if (progress < 1) {
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = `${target}${suffix}`;
+    }
+  };
+
+  requestAnimationFrame(update);
+};
+
+const triggerWhenVisible = (el, callback) => {
+  if (!el) return;
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          callback();
+          observer.unobserve(el);
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+  observer.observe(el);
+};
+
+/**
+ * Fetch and display GitHub repository count with smooth count-up.
  * @returns {Promise<void>}
  */
 export const fetchGitHubRepos = async () => {
@@ -15,7 +65,7 @@ export const fetchGitHubRepos = async () => {
   let cachedCount = null;
   if (cached && typeof cached.count === 'number' && cached.count > 0) {
     cachedCount = cached.count;
-    el.textContent = String(cached.count);
+    triggerWhenVisible(el, () => animateCount(el, cached.count, 1100));
   }
 
   try {
@@ -24,7 +74,7 @@ export const fetchGitHubRepos = async () => {
 
     const repos = await response.json();
     if (Array.isArray(repos) && repos.length > 0) {
-      el.textContent = String(repos.length);
+      triggerWhenVisible(el, () => animateCount(el, repos.length, 1200));
       writeCache(CACHE_KEY, { count: repos.length, at: Date.now() });
       return;
     }
@@ -40,7 +90,7 @@ export const fetchGitHubRepos = async () => {
 };
 
 /**
- * Fetch and display solved LeetCode problem count.
+ * Fetch and display solved LeetCode problem count with smooth count-up.
  * @returns {Promise<void>}
  */
 export const fetchLeetCodeSolved = async () => {
@@ -49,18 +99,18 @@ export const fetchLeetCodeSolved = async () => {
   if (!el) return;
 
   const CACHE_KEY = 'leetcode_solved_cache_v1';
-  const HARDCODED_FALLBACK = '400+';
+  const HARDCODED_FALLBACK = 400;
 
   const cached = readCache(CACHE_KEY);
   if (cached && typeof cached.count === 'number' && cached.count > 0) {
-    el.textContent = String(cached.count);
+    triggerWhenVisible(el, () => animateCount(el, cached.count, 1300));
   } else {
-    el.textContent = HARDCODED_FALLBACK;
+    triggerWhenVisible(el, () => animateCount(el, HARDCODED_FALLBACK, 1300, '+'));
   }
 
   const setCount = (count) => {
     if (typeof count !== 'number' || !Number.isFinite(count) || count <= 0) return false;
-    el.textContent = String(count);
+    triggerWhenVisible(el, () => animateCount(el, count, 1400));
     writeCache(CACHE_KEY, { count, at: Date.now() });
     return true;
   };
@@ -96,4 +146,15 @@ export const fetchLeetCodeSolved = async () => {
 
   // eslint-disable-next-line no-console
   console.warn('LeetCode: all sources failed, keeping last-known value.');
+};
+
+/**
+ * Animate static metric numbers on index.html (like Products Built)
+ */
+export const initStaticMetrics = () => {
+  const productsBuiltEl = document.getElementById('products-built');
+  if (productsBuiltEl) {
+    const target = parseInt(productsBuiltEl.getAttribute('data-target') || '2', 10);
+    triggerWhenVisible(productsBuiltEl, () => animateCount(productsBuiltEl, target, 1000));
+  }
 };
