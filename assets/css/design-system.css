@@ -581,38 +581,95 @@ body.site-modern h6 {
   box-shadow: 0 6px 20px rgba(56, 189, 248, 0.6);
 }
 
-/* Floating Tech Stack Logos Strip (Horizon Bar) */
+/* ==============================================================
+   INFINITE ROTATING TECH HORIZON MARQUEE
+   ============================================================== */
 .tech-horizon-strip {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 48px;
-  flex-wrap: wrap;
-  padding: 24px 0 16px 0;
   width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding: 24px 0 16px 0;
   margin-top: auto;
-  opacity: 0.65;
+  opacity: 0.85;
   transition: opacity 0.3s ease;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, black 4%, black 96%, transparent 100%);
 }
 
 .tech-horizon-strip:hover {
-  opacity: 0.95;
+  opacity: 1;
+}
+
+.tech-horizon-track {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  width: max-content;
+  animation: techMarqueeScroll 28s linear infinite;
+  will-change: transform;
+}
+
+.tech-horizon-strip:hover .tech-horizon-track {
+  animation-play-state: paused;
+}
+
+@keyframes techMarqueeScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 .tech-horizon-item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 9px;
   color: #cbd5e1;
   font-family: var(--font-mono);
   font-size: 0.88rem;
   letter-spacing: 0.02em;
+  white-space: nowrap;
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.25s var(--ease-spring);
+}
+
+.tech-horizon-item:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
 }
 
 .tech-horizon-item i {
   font-size: 1.35rem;
-  color: var(--aurora-cyan);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
 }
+
+.tech-horizon-item:hover i {
+  transform: scale(1.15);
+}
+
+/* Brand Accent Colors for Tech Icons */
+.icon-python { color: #38bdf8; }
+.icon-langgraph { color: var(--aurora-cyan); }
+.icon-fastapi { color: #2dd4bf; }
+.icon-postgres { color: #60a5fa; }
+.icon-docker { color: #38bdf8; }
+.icon-node { color: #4ade80; }
+.icon-agent { color: #c084fc; }
+.icon-cpp { color: #818cf8; }
+.icon-mongodb { color: #34d399; }
+.icon-langchain { color: #fbbf24; }
+.icon-git { color: #f87171; }
 
 /* ==============================================================
    PAGE CONTAINERS & SECTION HEADERS
@@ -685,6 +742,22 @@ body.site-modern h6 {
   border-radius: var(--radius-xl);
   padding: 36px;
   box-shadow: var(--shadow-diffuse), var(--glass-inner);
+}
+
+/* Dynamic Self-Distributing Metrics Row */
+.stats-metric-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 28px;
+  width: 100%;
+}
+
+.stat-metric-item {
+  flex: 1 1 180px;
+  text-align: center;
+  min-width: 140px;
 }
 
 .detail-section-title {
