@@ -13,7 +13,7 @@ export const projectsData = [
     featured: true,
     date: '2025 – 2026',
     role: 'AI & Systems Architect',
-    image: 'assets/img/project/Screenshot 2025-09-20 220049.png',
+    image: 'assets/img/projects/trading-agent.png',
     technologies: ['LangGraph', 'FastAPI', 'Python', 'TradingView', 'SSE', 'LangSmith', 'Yahoo Finance'],
     metrics: [
       { label: 'Agent Topology', value: '13 Agents' },
@@ -44,7 +44,7 @@ export const projectsData = [
     featured: true,
     date: '2025 – 2026',
     role: 'Lead AI Engineer',
-    image: 'assets/img/project/manim.png',
+    image: 'assets/img/projects/cursor-2d-animation.png',
     technologies: ['LangGraph', 'FastAPI', 'Manim', 'Python', 'Next.js', 'Supabase', 'SSE'],
     metrics: [
       { label: 'API Grounding', value: '100+ Verified APIs' },
@@ -75,7 +75,7 @@ export const projectsData = [
     featured: true,
     date: '2025 – 2026',
     role: 'Full-Stack AI Developer',
-    image: 'assets/img/project/Gemini_Generated_Image_2rv24f2rv24f2rv2.png',
+    image: 'assets/img/projects/ai-persona-chatbot.png',
     technologies: ['FastAPI', 'Llama-3.3-70B', 'Mistral Embeddings', 'Supabase pgvector', 'Docker', 'ChromaDB'],
     metrics: [
       { label: 'Model', value: 'Llama-3.3-70B' },
@@ -106,7 +106,7 @@ export const projectsData = [
     featured: false,
     date: '2025',
     role: 'AI Engineer',
-    image: 'assets/img/project/pine.png',
+    image: 'assets/img/projects/pinescript-agent.png',
     technologies: ['Pydantic AI', 'Supabase Vector', 'Python', 'Streamlit', 'Hugging Face'],
     metrics: [
       { label: 'Framework', value: 'Pydantic AI' },
@@ -136,7 +136,7 @@ export const projectsData = [
     featured: false,
     date: '2025',
     role: 'Backend & AI Engineer',
-    image: 'assets/img/project/Gemini_Generated_Image_5jj88l5jj88l5jj8.png',
+    image: 'assets/img/projects/ai-journalist.png',
     technologies: ['Python', 'MCP Architecture', 'LangChain', 'FastAPI', 'NewsAPI', 'gTTS', 'Streamlit'],
     metrics: [
       { label: 'Architecture', value: 'MCP Framework' },
@@ -166,7 +166,7 @@ export const projectsData = [
     featured: false,
     date: '2025',
     role: 'AI Developer',
-    image: 'assets/img/project/sum.png',
+    image: 'assets/img/projects/vidanalyze.png',
     technologies: ['Gemini 1.5 Pro', 'Phidata', 'Streamlit', 'Python', 'NLP'],
     metrics: [
       { label: 'Model', value: 'Gemini 1.5 Pro' },
@@ -196,7 +196,7 @@ export const projectsData = [
     featured: false,
     date: '2024 – 2025',
     role: 'Full-Stack Developer',
-    image: 'assets/img/project/SMAA.png',
+    image: 'assets/img/projects/market-analyzer.png',
     technologies: ['Python', 'Streamlit', 'Gemini API', 'Pandas', 'Matplotlib'],
     metrics: [
       { label: 'Analytics', value: 'Technical Indicators' },
@@ -226,7 +226,7 @@ export const projectsData = [
     featured: false,
     date: '2024',
     role: 'ML Engineer',
-    image: 'assets/img/project/ml.png',
+    image: 'assets/img/projects/student-performance.png',
     technologies: ['Scikit-Learn', 'XGBoost', 'CatBoost', 'Flask', 'Docker', 'Pandas'],
     metrics: [
       { label: 'Model Ensemble', value: 'XGBoost & CatBoost' },
