@@ -23,7 +23,7 @@ export const initCertificatesPage = () => {
         <p class="project-card-tagline" style="font-size: 0.9rem;">${cert.description}</p>
         <div class="project-card-footer" style="margin-top: auto;">
           <a href="${cert.link}" target="_blank" rel="noopener noreferrer" class="btn-primary-action" style="padding: 8px 16px; font-size: 0.82rem; width: 100%;">
-            <i class="bx bx-award"></i> Verify Certificate
+            <i class="bx bx-award"></i> View Certificate
           </a>
         </div>
       </div>
